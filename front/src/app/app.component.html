@@ -1,1 +1,59 @@
-<router-outlet></router-outlet>
+<div class="app">
+  <div *ngIf="$isLogged() | async; else notLogged">
+    <mat-sidenav-container (backdropClick)="sidenav.close()">
+      <mat-sidenav
+        #sidenav
+        (keydown.escape)="sidenav.close()"
+        disableClose
+        position="end"
+        autoFocus="false"
+      >
+        <div class="sidenav-container">
+          <div class="sidenav-buttons">
+            <button
+              mat-button
+              routerLinkActive
+              routerLink="posts"
+              #postsRla="routerLinkActive"
+              [color]="postsRla.isActive ? 'primary' : null"
+            >
+              Articles
+            </button>
+            <button
+              mat-button
+              routerLinkActive
+              routerLink="topics"
+              #topicRla="routerLinkActive"
+              [color]="topicRla.isActive ? 'primary' : null"
+            >
+              Thèmes
+            </button>
+          </div>
+          <img
+            routerLinkActive
+            #profileRla="routerLinkActive"
+            [src]="
+              profileRla.isActive
+                ? '/assets/images/profile-selected.svg'
+                : '/assets/images/profile.svg'
+            "
+            alt="profile"
+            routerLink="profile"
+            class="profile"
+          />
+        </div>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <app-header (openMenuAction)="sidenav.open()"></app-header>
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+  <ng-template #notLogged>
+    <div class="center">
+      <img src="/assets/logo_p6.png" alt="logo" />
+      <button mat-stroked-button>Se connecter</button>
+      <button mat-flat-button color="primary">S'inscrire</button>
+    </div>
+  </ng-template>
+</div>
