@@ -1,0 +1,37 @@
+<mat-toolbar>
+  <img src="/assets/logo_p6.png" alt="logo" class="toolbar-logo" />
+  <span class="example-spacer"></span>
+  <button
+    mat-button
+    routerLinkActive
+    routerLink="posts"
+    #postsRla="routerLinkActive"
+    [color]="postsRla.isActive ? 'primary' : null"
+  >
+    Articles
+  </button>
+  <button
+    mat-button
+    routerLinkActive
+    routerLink="topics"
+    #topicRla="routerLinkActive"
+    [color]="topicRla.isActive ? 'primary' : null"
+  >
+    Thèmes
+  </button>
+  <img
+    routerLinkActive
+    #profileRla="routerLinkActive"
+    [src]="
+      profileRla.isActive
+        ? '/assets/images/profile-selected.svg'
+        : '/assets/images/profile.svg'
+    "
+    alt="profile"
+    routerLink="profile"
+    class="profile"
+  />
+  <button mat-icon-button (click)="openMenu()" class="menu-button">
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
