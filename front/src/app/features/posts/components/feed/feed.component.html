@@ -1,0 +1,19 @@
+<button mat-flat-button color="primary">Créer un article</button>
+<mat-grid-list cols="2" rowHeight="2:1">
+    <mat-card class="item" *ngFor="let post of (feed$ | async)?.posts" fxFlex>
+        <mat-grid-tile>
+        <mat-card-header>
+            <mat-card-title>{{ post.title }}</mat-card-title>
+            <mat-card-subtitle>
+                Autheur: {{ post.author_id }}
+                <!--<app-owner-info [ownerId]="rental.owner_id"></app-owner-info>-->
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>
+                {{ post.description }}
+            </p>
+        </mat-card-content>
+    </mat-grid-tile>
+    </mat-card>
+</mat-grid-list>
