@@ -9,6 +9,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { HeaderComponent } from "./components/header/header.component";
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -22,7 +23,8 @@ import { HeaderComponent } from "./components/header/header.component";
     HeaderComponent
 ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    provideHttpClient()
   ],
   bootstrap: [AppComponent],
 })
