@@ -1,0 +1,8 @@
+<div class="card" [routerLink]="['details',post.id]">
+    <span class="title">{{ post.title }}</span>
+    <span class="post-infos">
+        <span class="text">{{ post.created_at | date: 'longDate' }}</span>
+        <span class="text">Autheur{{ post.author_id }}</span>
+    </span>
+    <span class="text description">{{ post.description }}</span>
+</div>
