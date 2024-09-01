@@ -3,11 +3,14 @@ import { PostsService } from '../../services/posts.service';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { PostCardComponent } from "../post-card/post-card.component";
 
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [MatGridListModule, MatCardModule, CommonModule],
+  imports: [MatGridListModule, MatCardModule, CommonModule, MatButtonModule, ScrollingModule, PostCardComponent],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
 })
