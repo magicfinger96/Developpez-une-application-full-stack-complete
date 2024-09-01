@@ -1,10 +1,11 @@
 <div class="feed">
   <div class="feed-header">
     <button mat-flat-button color="primary">Créer un article</button>
-    <button mat-button>Trier par ↓</button>
+    <button mat-button *ngIf="(feed$ | async)?.posts?.length ?? 0 > 0">Trier par ↓</button>
   </div>
   <div class="feed-content">
     <app-post-card *ngFor="let post of (feed$ | async)?.posts" [post]="post">
     </app-post-card>
+    <div *ngIf="(feed$ | async)?.posts?.length === 0">Votre fils d'actualité est vide. Abonnez vous à des thèmes pour le remplir.</div>
   </div>
 </div>
