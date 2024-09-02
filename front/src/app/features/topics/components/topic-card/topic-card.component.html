@@ -1,5 +1,11 @@
 <div class="card">
-    <span class="title">{{ topic.title }}</span>
-    <span class="text description">{{ topic.description }}</span>
-    <button *ngIf="topic.subscribed == false" mat-flat-button color="primary">S'abonner</button>
+  <span class="title">{{ topic.title }}</span>
+  <span class="text description">{{ topic.description }}</span>
+  <div class="subscription-button">
+    @if (topic.subscribed == false) {
+    <button mat-flat-button color="primary">S'abonner</button>
+    } @else {
+    <button mat-button disabled>Abonné(e)</button>
+    }
+  </div>
 </div>
