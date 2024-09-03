@@ -1,0 +1,9 @@
+<div class="comments">
+  <span class="text">Commentaires</span>
+  <div class="list">
+    <div *ngFor="let comment of comments$ | async" class="comment">
+        <span>Auteur{{ comment.author_id }}</span>
+        <div class="content">{{ comment.message }}</div>
+      </div>
+  </div>
+</div>
