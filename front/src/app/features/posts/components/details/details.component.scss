@@ -24,7 +24,6 @@
 
   .post-infos {
     text-align: left;
-    margin-left: 70px;
 
     span {
       width: auto;
@@ -35,11 +34,20 @@
   }
 
   .description {
-    margin-left: 70px;
     margin-bottom: 30px;
   }
 
   mat-icon {
     transform: scale(2);
+  }
+}
+
+@media screen and (min-width: 432px) {
+  .post-infos {
+    margin-left: 70px;
+  }
+
+  .description {
+    margin-left: 70px;
   }
 }
