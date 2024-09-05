@@ -1,0 +1,47 @@
+.create {
+  margin-top: 64px;
+  padding-top: 26px;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  position: relative;
+  height: fit-content;
+
+  button {
+    margin-left: 15px;
+  }
+}
+
+h1 {
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
+  flex-grow: 1;
+  margin-left: -80px;
+  margin-bottom: 0px;
+}
+
+mat-icon {
+  transform: scale(2);
+}
+
+form {
+  margin: 30px auto 0px auto;
+  width: 281px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  textarea {
+    min-height: 212px;
+  }
+}
+
+.submit-container {
+    margin-top: 20px;
+    text-align: center;
+}
