@@ -2,8 +2,22 @@
   <span class="text">Commentaires</span>
   <div class="list">
     <div *ngFor="let comment of comments$ | async" class="comment">
-        <span>Auteur{{ comment.author_id }}</span>
-        <div class="content">{{ comment.message }}</div>
-      </div>
+      <span class="text">Auteur{{ comment.author_id }}</span>
+      <div class="content text">{{ comment.message }}</div>
+    </div>
   </div>
+  <form [formGroup]="commentForm" (ngSubmit)="sendMessage()">
+    <div class="textarea-container">
+      <textarea
+        class="text"
+        matInput
+        placeholder="Écrivez ici votre commentaire"
+        formControlName="message"
+      >
+      </textarea>
+      <button mat-button type="submit" [disabled]="commentForm.invalid">
+        <img src="/assets/images/send_icon.png" alt="send icon" />
+      </button>
+    </div>
+  </form>
 </div>
