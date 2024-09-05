@@ -1,6 +1,6 @@
 <div class="feed">
   <div class="feed-header">
-    <button mat-flat-button color="primary">Créer un article</button>
+    <button mat-flat-button color="primary" routerLink="create">Créer un article</button>
     @if ((feed$ | async)?.length ?? 0 > 0) {
     <button mat-button (click)="onSortClicked()">
       Trier par {{ sortOrder === "asc" ? "↑" : "↓" }}

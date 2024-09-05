@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PostCardComponent } from '../post-card/post-card.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-feed',
@@ -17,6 +18,7 @@ import { PostCardComponent } from '../post-card/post-card.component';
     MatButtonModule,
     ScrollingModule,
     PostCardComponent,
+    RouterLink
   ],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
