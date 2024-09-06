@@ -6,7 +6,6 @@
 .header {
   display: flex;
   justify-content: center;
-  align-items: stretch;
   position: relative;
   height: fit-content;
 
@@ -39,8 +38,8 @@ form {
 }
 
 .submit-container {
-    margin-top: 20px;
-    text-align: center;
+  margin-top: 20px;
+  text-align: center;
 }
 
 @media screen and (max-width: 749px) {
@@ -50,6 +49,12 @@ form {
 
   .header {
     flex-direction: column;
+    align-items: center;
+
+    button {
+      margin-right: auto;
+      margin-left: 20px;
+    }
   }
 }
 
@@ -61,5 +66,9 @@ form {
 
   h1 {
     margin-left: -80px;
+  }
+
+  .header {
+    align-items: stretch;
   }
 }
