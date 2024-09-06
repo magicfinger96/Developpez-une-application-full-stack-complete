@@ -1,0 +1,74 @@
+.create {
+  margin-top: 64px;
+  padding-top: 26px;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: fit-content;
+
+  button {
+    margin-left: 15px;
+  }
+}
+
+h1 {
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
+  flex-grow: 1;
+  margin-bottom: 0px;
+}
+
+mat-icon {
+  transform: scale(2);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  textarea {
+    min-height: 212px;
+  }
+}
+
+.submit-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+@media screen and (max-width: 749px) {
+  form {
+    margin: 30px 22px 0px 22px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: center;
+
+    button {
+      margin-right: auto;
+      margin-left: 20px;
+    }
+  }
+}
+
+@media screen and (min-width: 750px) {
+  form {
+    margin: 30px auto 0px auto;
+    width: 281px;
+  }
+
+  h1 {
+    margin-left: -80px;
+  }
+
+  .header {
+    align-items: stretch;
+  }
+}
