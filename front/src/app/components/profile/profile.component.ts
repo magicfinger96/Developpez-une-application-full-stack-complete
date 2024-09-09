@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { User } from 'src/app/interfaces/user.interface';
 import { SessionService } from 'src/app/services/session.service';
 import { noChangesValidator } from 'src/app/shared/directives/no-changes.directive';
+import { SubscriptionsComponent } from "../../features/topics/components/subscriptions/subscriptions.component";
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +25,8 @@ import { noChangesValidator } from 'src/app/shared/directives/no-changes.directi
     ReactiveFormsModule,
     MatInputModule,
     MatIconModule,
-  ],
+    SubscriptionsComponent
+],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
