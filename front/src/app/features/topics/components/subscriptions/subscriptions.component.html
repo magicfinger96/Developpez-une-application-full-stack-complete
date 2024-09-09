@@ -1,0 +1,9 @@
+<h1>Abonnements</h1>
+<div class="list">
+  <app-topic-card
+    *ngFor="let topic of subscribedTopics$ | async"
+    [topic]="topic"
+    [canSubscribe]="false"
+  >
+  </app-topic-card>
+</div>
