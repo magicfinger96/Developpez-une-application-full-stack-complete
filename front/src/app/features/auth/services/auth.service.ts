@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/interfaces/user.interface';
-import { UpdateResponse } from '../interfaces/updateResponse.interface';
+import { Response } from '../../topics/interfaces/response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class AuthService {
     return this.httpClient.get<User>(`${this.pathService}/me`);
   }
 
-  public update(form: FormData): Observable<UpdateResponse> {
-    return this.httpClient.put<UpdateResponse>(`${this.pathService}/me`, form);
+  public update(form: FormData): Observable<Response> {
+    return this.httpClient.put<Response>(`${this.pathService}/me`, form);
   }
 }
