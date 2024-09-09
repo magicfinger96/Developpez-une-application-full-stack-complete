@@ -9,6 +9,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { User } from 'src/app/interfaces/user.interface';
@@ -34,6 +35,7 @@ export class ProfileComponent {
   public form!: FormGroup;
   private authService: AuthService = inject(AuthService);
   private sessionService: SessionService = inject(SessionService);
+  private matSnackBar: MatSnackBar = inject(MatSnackBar);
   private router: Router = inject(Router);
   private fb: FormBuilder = inject(FormBuilder);
 
@@ -61,6 +63,8 @@ export class ProfileComponent {
     formData.append('email', this.form!.get('email')?.value);
     formData.append('username', this.form!.get('username')?.value);
 
-    this.authService.update(formData);
+    this.authService.update(formData).subscribe(response => {
+      this.matSnackBar.open(response.message, "Close", { duration: 3000 });
+    });
   }
 }
