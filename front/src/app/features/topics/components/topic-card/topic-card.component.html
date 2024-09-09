@@ -2,10 +2,12 @@
   <span class="title">{{ topic.title }}</span>
   <span class="text description">{{ topic.description }}</span>
   <div class="subscription-button">
-    @if (topic.subscribed == false) {
-    <button mat-flat-button color="primary">S'abonner</button>
+    @if ((isDisabled$ | async) == false) {
+    <button mat-flat-button color="primary" (click)="onButtonClicked()">
+      {{ buttonText }}
+    </button>
     } @else {
-    <button mat-button disabled>Abonné(e)</button>
+    <button mat-button disabled>{{ disabledButtonText }}</button>
     }
   </div>
 </div>
