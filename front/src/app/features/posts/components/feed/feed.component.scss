@@ -1,3 +1,5 @@
+@use "variables";
+
 .item {
   background-color: #f5f5f5;
 }
@@ -20,10 +22,9 @@
 }
 
 .feed {
-  margin-top: 64px;
   display: flex;
   flex-direction: column;
-  height: calc(100% - 64px);
+  height: calc(100% - variables.$header-height);
   gap: 25px;
 }
 
