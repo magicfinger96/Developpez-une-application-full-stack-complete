@@ -1,15 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
+import { Routes } from '@angular/router';
 import { FeedComponent } from './features/posts/components/feed/feed.component';
 import { DetailsComponent } from './features/posts/components/details/details.component';
 import { ListComponent } from './features/topics/components/list/list.component';
 import { CreateComponent } from './features/posts/components/create/create.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { HomeComponent } from './pages/home/home.component';
 
-// consider a guard combined with canLoad / canActivate route option
-// to manage unauthenticated user to access private routes
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'feed', component: FeedComponent },
@@ -17,9 +14,3 @@ const routes: Routes = [
   { path: 'topics', component: ListComponent },
   { path: 'feed/create', component: CreateComponent },
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}

@@ -3,11 +3,11 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { TopicsService } from 'src/app/features/topics/services/topics.service';
 import { MatSelectModule } from '@angular/material/select';
 import { PostsService } from '../../services/posts.service';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { TopicsService } from '../../../topics/services/topics.service';
 
 @Component({
   selector: 'app-create',

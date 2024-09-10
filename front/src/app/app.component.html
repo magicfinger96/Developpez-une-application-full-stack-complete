@@ -34,8 +34,8 @@
             #profileRla="routerLinkActive"
             [src]="
               profileRla.isActive
-                ? '/assets/images/profile-selected.svg'
-                : '/assets/images/profile.svg'
+                ? 'images/profile-selected.svg'
+                : 'images/profile.svg'
             "
             alt="profile"
             routerLink="profile"
@@ -51,7 +51,7 @@
   </div>
   <ng-template #notLogged>
     <div class="center">
-      <img src="/assets/logo_p6.png" alt="logo" />
+      <img src="images/logo_p6.png" alt="logo" />
       <button mat-stroked-button>Se connecter</button>
       <button mat-flat-button color="primary">S'inscrire</button>
     </div>

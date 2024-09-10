@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-import { AppRoutingModule } from 'src/app/app-routing.module';
 import { CommentsComponent } from "../comments/comments.component";
 
 @Component({

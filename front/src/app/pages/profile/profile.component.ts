@@ -11,11 +11,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/features/auth/services/auth.service';
-import { User } from 'src/app/interfaces/user.interface';
-import { SessionService } from 'src/app/services/session.service';
-import { noChangesValidator } from 'src/app/shared/directives/no-changes.directive';
 import { SubscriptionsComponent } from "../../features/topics/components/subscriptions/subscriptions.component";
+import { AuthService } from '../../features/auth/services/auth.service';
+import { SessionService } from '../../core/services/session.service';
+import { User } from '../../core/interfaces/user.interface';
+import { noChangesValidator } from '../../shared/directives/no-changes.directive';
 
 @Component({
   selector: 'app-profile',
