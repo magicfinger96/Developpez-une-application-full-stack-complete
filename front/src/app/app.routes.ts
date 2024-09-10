@@ -5,12 +5,19 @@ import { ListComponent } from './features/topics/components/list/list.component'
 import { CreateComponent } from './features/posts/components/create/create.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { HomeComponent } from './pages/home/home.component';
+import { MenuLayoutComponent } from './core/components/menu-layout/menu-layout.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'feed', component: FeedComponent },
-  { path: 'feed/details/:id', component: DetailsComponent },
-  { path: 'topics', component: ListComponent },
-  { path: 'feed/create', component: CreateComponent },
+  {
+    path: '',
+    component: MenuLayoutComponent,
+    children: [
+      { path: 'profile', component: ProfileComponent },
+      { path: 'feed', component: FeedComponent },
+      { path: 'feed/details/:id', component: DetailsComponent },
+      { path: 'topics', component: ListComponent },
+      { path: 'feed/create', component: CreateComponent },
+    ],
+  },
 ];

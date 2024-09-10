@@ -11,17 +11,17 @@
 @media screen and (max-width: 433px) {
   .list {
     grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
-    margin-top: calc(12px + 64px);
-    margin-left: 15px;
-    margin-right: 15px;
+    padding-top: 12px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
 
 @media screen and (min-width: 432px) {
   .list {
     grid-template-columns: repeat(auto-fit, minmax(392px, 1fr));
-    margin-top: calc(23px + 64px);
-    margin-left: 24px;
-    margin-right: 24px;
+    padding-top: 23px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }
