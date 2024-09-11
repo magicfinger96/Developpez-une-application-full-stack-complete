@@ -1,0 +1,82 @@
+@use "variables";
+
+.header {
+  padding-top: 26px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: fit-content;
+
+  button {
+    margin-left: 15px;
+  }
+}
+
+.header span {
+  flex-grow: 1;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 24px;
+  text-align: center;
+}
+
+mat-icon {
+  transform: scale(2);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.submit-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+@media screen and (max-width: 749px) {
+  app-header {
+    display: none;
+  }
+
+  form {
+    margin: 30px 22px 0px 22px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: center;
+
+    button {
+      margin-right: auto;
+      margin-left: 20px;
+    }
+
+    img {
+      width: 225px;
+    }
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .content {
+    padding-top: variables.$header-height;
+  }
+
+  form {
+    margin: 30px auto 0px auto;
+    width: 250px;
+  }
+
+  span {
+    margin-left: -80px;
+  }
+
+  .header {
+    align-items: center;
+    img {
+      display: none;
+    }
+  }
+}
