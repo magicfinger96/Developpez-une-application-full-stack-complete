@@ -1,6 +1,7 @@
 <mat-toolbar class="toolbar">
   <img src="images/logo_p6.png" alt="logo" class="toolbar-logo" />
   <span class="example-spacer"></span>
+  @if(showButtons){
   <button
     mat-button
     routerLinkActive
@@ -23,9 +24,7 @@
     routerLinkActive
     #profileRla="routerLinkActive"
     [src]="
-      profileRla.isActive
-        ? 'images/profile-selected.svg'
-        : 'images/profile.svg'
+      profileRla.isActive ? 'images/profile-selected.svg' : 'images/profile.svg'
     "
     alt="profile"
     routerLink="profile"
@@ -34,4 +33,5 @@
   <button mat-icon-button (click)="openMenu()" class="menu-button">
     <mat-icon>menu</mat-icon>
   </button>
+  }
 </mat-toolbar>
