@@ -4,7 +4,7 @@ import { inject } from '@angular/core';
 
 /**
  * Adds a JWT on the header.
- * 
+ *
  * @param request request to modify.
  * @param next next processing step.
  * @returns the modified request.
@@ -16,11 +16,11 @@ export function jwtInterceptor(
   let sessionService: SessionService = inject(SessionService);
 
   if (sessionService.isLogged) {
+    let token: string | null = localStorage.getItem('token');
     request = request.clone({
-      headers: request.headers.append(
-        'X-Authentication-Token',
-        sessionService.sessionInformation!.token
-      ),
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
   return next(request);
