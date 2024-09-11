@@ -1,8 +1,25 @@
 import { Routes } from '@angular/router';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { AuthComponent } from './auth.component';
 
 export const AUTH_ROUTES: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  {
+    path: '',
+    component: AuthComponent,
+    children: [
+      {
+        path: 'login',
+        title: 'Connexion',
+        component: LoginComponent,
+        data: { title: 'Se connecter' },
+      },
+      {
+        path: 'register',
+        title: 'Inscription',
+        component: RegisterComponent,
+        data: { title: 'Inscription' },
+      },
+    ],
+  },
 ];

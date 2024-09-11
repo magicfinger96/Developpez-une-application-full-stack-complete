@@ -1,11 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { HeaderComponent } from '../../../../core/components/header/header.component';
-import { MatIcon } from '@angular/material/icon';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import {
   FormBuilder,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -13,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
 import { RegisterRequest } from '../../interfaces/register-request.interface';
 import { AuthSuccess } from '../../interfaces/auth-success.interface';
 import { User } from '../../../../core/interfaces/user.interface';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { SessionService } from '../../../../core/services/session.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
@@ -22,19 +19,16 @@ import { MatButton } from '@angular/material/button';
   selector: 'app-register',
   standalone: true,
   imports: [
-    HeaderComponent,
-    MatIcon,
     MatButton,
     MatFormField,
     MatLabel,
     ReactiveFormsModule,
-    MatInputModule,
-    RouterLink
+    MatInputModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   public form!: FormGroup;
   private fb: FormBuilder = inject(FormBuilder);
   private router: Router = inject(Router);
