@@ -1,0 +1,23 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.submit-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+@media screen and (max-width: 749px) {
+  form {
+    margin: 30px 22px 0px 22px;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  form {
+    margin: 30px auto 0px auto;
+    width: 250px;
+  }
+}

@@ -3,6 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Response } from '../../topics/interfaces/response.interface';
 import { User } from '../../../core/interfaces/user.interface';
+import { AuthSuccess } from '../interfaces/auth-success.interface';
+import { RegisterRequest } from '../interfaces/register-request.interface';
+import { LoginRequest } from '../interfaces/login-request.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -18,5 +21,19 @@ export class AuthService {
 
   public update(form: FormData): Observable<Response> {
     return this.httpClient.put<Response>(`${this.pathService}/me`, form);
+  }
+
+  public register(registerRequest: RegisterRequest): Observable<AuthSuccess> {
+    return this.httpClient.post<AuthSuccess>(
+      `${this.pathService}/register`,
+      registerRequest
+    );
+  }
+
+  public login(loginRequest: LoginRequest): Observable<AuthSuccess> {
+    return this.httpClient.post<AuthSuccess>(
+      `${this.pathService}/login`,
+      loginRequest
+    );
   }
 }
