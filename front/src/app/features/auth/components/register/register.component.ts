@@ -23,7 +23,7 @@ import { MatButton } from '@angular/material/button';
     MatFormField,
     MatLabel,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -51,15 +51,15 @@ export class RegisterComponent implements OnInit {
 
   public submit(): void {
     const registerRequest = this.form.value as RegisterRequest;
-    this.authService.register(registerRequest).subscribe(
-      (response: AuthSuccess) => {
+    this.authService.register(registerRequest).subscribe({
+      next: (response: AuthSuccess) => {
         localStorage.setItem('token', response.token);
         this.authService.me().subscribe((user: User) => {
           this.sessionService.logIn(user);
           this.router.navigate(['/feed']);
         });
       },
-      (error) => (this.onError = true)
-    );
+      error: () => (this.onError = true),
+    });
   }
 }
