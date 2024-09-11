@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Topic } from '../../interfaces/topic.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,7 @@ import { map, Observable, of } from 'rxjs';
   templateUrl: './topic-card.component.html',
   styleUrl: './topic-card.component.scss',
 })
-export class TopicCardComponent {
+export class TopicCardComponent implements OnInit {
   @Input() topic!: Topic;
   @Input() canSubscribe!: boolean;
 
@@ -70,7 +70,7 @@ export class TopicCardComponent {
 
   /**
    * Enable or disable the button of the card.
-   * 
+   *
    * Enable it if the user is subscribed to the topic and he can unsubscribe.
    * Or if the user isn't subscribed to the topic and he can subscribe.
    */

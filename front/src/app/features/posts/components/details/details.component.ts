@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PostsService } from '../../services/posts.service';
 import { Post } from '../../interfaces/post.interface';
@@ -22,7 +22,7 @@ import { CommentsComponent } from "../comments/comments.component";
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss',
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
   private postsService: PostsService = inject(PostsService);
 

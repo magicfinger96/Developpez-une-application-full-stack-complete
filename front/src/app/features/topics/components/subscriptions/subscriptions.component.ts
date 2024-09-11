@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TopicCardComponent } from '../topic-card/topic-card.component';
 import { CommonModule } from '@angular/common';
 import { TopicsService } from '../../services/topics.service';
@@ -13,7 +13,7 @@ import { Topic } from '../../interfaces/topic.interface';
   templateUrl: './subscriptions.component.html',
   styleUrl: './subscriptions.component.scss',
 })
-export class SubscriptionsComponent {
+export class SubscriptionsComponent implements OnInit {
   private topicsService: TopicsService = inject(TopicsService);
   private subscriptionsService: SubscriptionsService =
     inject(SubscriptionsService);

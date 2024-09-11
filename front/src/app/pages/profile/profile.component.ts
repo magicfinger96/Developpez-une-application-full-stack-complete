@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -31,7 +31,7 @@ import { noChangesValidator } from '../../shared/directives/no-changes.directive
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   public form!: FormGroup;
   private authService: AuthService = inject(AuthService);
   private sessionService: SessionService = inject(SessionService);

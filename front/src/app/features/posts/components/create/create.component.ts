@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -19,12 +24,12 @@ import { TopicsService } from '../../../topics/services/topics.service';
     MatInputModule,
     MatSelectModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss',
 })
-export class CreateComponent {
+export class CreateComponent implements OnInit {
   public form!: FormGroup;
   private topicsService: TopicsService = inject(TopicsService);
   private postsService: PostsService = inject(PostsService);
@@ -38,26 +43,13 @@ export class CreateComponent {
 
   private initForm(): void {
     this.form = this.fb.group({
-      title: [
-        '',
-        [Validators.required]
-      ],
-      topic_id: [
-        '',
-        [Validators.required]
-      ],
-      description: [
-        '',
-        [
-          Validators.required,
-          Validators.max(2000)
-        ]
-      ],
+      title: ['', [Validators.required]],
+      topic_id: ['', [Validators.required]],
+      description: ['', [Validators.required, Validators.max(2000)]],
     });
   }
 
   public submit(): void {
-
     const formData = new FormData();
     formData.append('name', this.form!.get('name')?.value);
     formData.append('surface', this.form!.get('surface')?.value);
