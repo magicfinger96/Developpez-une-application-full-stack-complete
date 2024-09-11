@@ -4,6 +4,13 @@ import { MenuLayoutComponent } from './core/components/menu-layout/menu-layout.c
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
+
+  {
+    path: '',
+    loadChildren: () =>
+      import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES),
+  },
+
   {
     path: '',
     component: MenuLayoutComponent,
