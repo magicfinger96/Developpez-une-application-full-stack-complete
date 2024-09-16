@@ -11,13 +11,13 @@ import lombok.Data;
 public class RegisterRequest {
 
     @Email
-    @NotBlank(message = "The email is required and can't be empty.")
+    @NotBlank(message = "L'adresse email est requise.")
     private String email;
 
-    @NotBlank(message = "The username is required and can't be empty.")
+    @NotBlank(message = "Le nom d'utilisateur est requis.")
     private String username;
 
-    @NotBlank(message = "The password is required and can't be empty.")
+    @NotBlank(message = "Le mot de passe est requis.")
     private String password;
 
 }
