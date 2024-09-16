@@ -8,6 +8,7 @@ import com.openclassrooms.mddapi.model.response.AuthSuccessResponse;
 import com.openclassrooms.mddapi.service.AuthenticationService;
 import com.openclassrooms.mddapi.service.JWTService;
 import com.openclassrooms.mddapi.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,9 @@ public class AuthenticationController {
 
     @Autowired
     public JWTService jwtService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     /**
      * End point logging the user in.
@@ -92,7 +96,10 @@ public class AuthenticationController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        String email = authentication.getName();
+        User user = (User) authentication.getPrincipal();
+        UserDto userDto = modelMapper.map(user, UserDto.class);
+        return ResponseEntity.ok(userDto);
+    }
 
         return ResponseEntity.ok(userService.getUserDtoByEmail(email));
     }
