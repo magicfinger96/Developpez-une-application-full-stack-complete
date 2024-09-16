@@ -5,21 +5,20 @@ import com.openclassrooms.mddapi.model.entity.User;
 import com.openclassrooms.mddapi.model.request.LoginRequest;
 import com.openclassrooms.mddapi.model.request.RegisterRequest;
 import com.openclassrooms.mddapi.model.response.AuthSuccessResponse;
+import com.openclassrooms.mddapi.model.response.MessageResponse;
 import com.openclassrooms.mddapi.service.AuthenticationService;
 import com.openclassrooms.mddapi.service.JWTService;
 import com.openclassrooms.mddapi.service.UserService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Handles the end points related to the user authentication.
@@ -101,7 +100,38 @@ public class AuthenticationController {
         return ResponseEntity.ok(userDto);
     }
 
-        return ResponseEntity.ok(userService.getUserDtoByEmail(email));
+
+    @PutMapping("/api/auth/me")
+    public ResponseEntity<?> updateMe(
+            @NotBlank @Email @RequestParam String email,
+            @NotBlank @RequestParam String username
+    ) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        User userWithUsername = userService.getUserByUsername(username);
+        User userWithEmail = userService.getUserByEmail(email);
+
+        if(userWithUsername != null && userWithUsername.getId() != user.getId()){
+            return new ResponseEntity<>("Le nom d'utilisateur est déjà utilisé.", HttpStatus.CONFLICT);
+        }
+
+        if(userWithEmail != null && userWithEmail.getId() != user.getId()){
+            return new ResponseEntity<>("L'adresse e-mail est déjà utilisée.", HttpStatus.CONFLICT);
+        }
+
+        user.setUsername(username);
+        user.setEmail(email);
+
+        userService.saveUser(user);
+        MessageResponse response = new MessageResponse("Votre profil a été mis à jour !");
+        return ResponseEntity.ok(response);
     }
 }
 
