@@ -54,10 +54,8 @@ export class RegisterComponent implements OnInit {
     this.authService.register(registerRequest).subscribe({
       next: (response: AuthSuccess) => {
         localStorage.setItem('token', response.token);
-        this.authService.me().subscribe((user: User) => {
-          this.sessionService.logIn(user);
+        this.sessionService.logIn(response.token);
           this.router.navigate(['/feed']);
-        });
       },
       error: () => (this.onError = true),
     });

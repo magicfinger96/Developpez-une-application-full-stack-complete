@@ -53,11 +53,8 @@ export class LoginComponent implements OnInit {
     const loginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({
       next: (response: AuthSuccess) => {
-        localStorage.setItem('token', response.token);
-        this.authService.me().subscribe((user: User) => {
-          this.sessionService.logIn(user);
+          this.sessionService.logIn(response.token);
           this.router.navigate(['/feed']);
-        });
       },
       error: () => (this.onError = true),
     });
