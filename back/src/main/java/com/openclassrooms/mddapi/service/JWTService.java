@@ -4,7 +4,7 @@ package com.openclassrooms.mddapi.service;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-import org.springframework.security.core.userdetails.UserDetails;
+import com.openclassrooms.mddapi.model.entity.User;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -27,18 +27,17 @@ public class JWTService {
     /**
      * Generates a token with RS256 algorithm which last 1 day.
      *
-     * @param userDetails its username is used to generate the token.
+     * @param user its id is used to generate the token.
      * @return the token.
      */
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(User user) {
         Instant now = Instant.now();
         JwtClaimsSet claims = JwtClaimsSet.builder().issuer("self").issuedAt(now)
-                .expiresAt(now.plus(1, ChronoUnit.DAYS)).subject(userDetails.getUsername()).build();
+                .expiresAt(now.plus(1, ChronoUnit.DAYS)).subject(String.valueOf(user.getId())).build();
 
         JwtEncoderParameters jwtEncoderParameters = JwtEncoderParameters
                 .from(JwsHeader.with(SignatureAlgorithm.RS256).build(), claims);
 
         return this.jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
     }
-
 }
