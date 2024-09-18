@@ -9,12 +9,10 @@ import com.openclassrooms.mddapi.model.request.RegisterRequest;
 import com.openclassrooms.mddapi.model.response.AuthSuccessResponse;
 import com.openclassrooms.mddapi.model.response.MessageResponse;
 import com.openclassrooms.mddapi.service.AuthenticationService;
-import com.openclassrooms.mddapi.service.JWTService;
 import com.openclassrooms.mddapi.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +31,7 @@ public class AuthenticationController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    public JWTService jwtService;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
+    
     /**
      * End point logging the user in.
      *
