@@ -16,6 +16,7 @@ import { AuthService } from '../../features/auth/services/auth.service';
 import { SessionService } from '../../core/services/session.service';
 import { User } from '../../core/interfaces/user.interface';
 import { noChangesValidator } from '../../shared/directives/no-changes.directive';
+import { Response } from '../../features/topics/interfaces/response.interface';
 
 @Component({
   selector: 'app-profile',
@@ -38,6 +39,8 @@ export class ProfileComponent implements OnInit {
   private matSnackBar: MatSnackBar = inject(MatSnackBar);
   private router: Router = inject(Router);
   private fb: FormBuilder = inject(FormBuilder);
+
+  public errorMessage: String = '';
 
   public ngOnInit(): void {
     this.authService.me().subscribe((user: User) => this.initForm(user));
@@ -63,8 +66,12 @@ export class ProfileComponent implements OnInit {
     formData.append('email', this.form!.get('email')?.value);
     formData.append('username', this.form!.get('username')?.value);
 
-    this.authService.update(formData).subscribe(response => {
-      this.matSnackBar.open(response.message, "Close", { duration: 3000 });
+    this.authService.update(formData).subscribe({
+      next: (response: Response) => {
+        this.errorMessage = "";
+        this.matSnackBar.open(response.message, "Close", { duration: 3000 });
+      },
+      error: (errorResponse) => (this.errorMessage = errorResponse.error),
     });
   }
 }
