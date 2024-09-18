@@ -15,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
 import { AuthSuccess } from '../../interfaces/auth-success.interface';
 import { LoginRequest } from '../../interfaces/login-request.interface';
 import { User } from '../../../../core/interfaces/user.interface';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ import { User } from '../../../../core/interfaces/user.interface';
     MatLabel,
     ReactiveFormsModule,
     MatInputModule,
+    NgIf,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
 
   public form!: FormGroup;
-  public onError = false;
+  public errorMessage: String = '';
 
   public ngOnInit(): void {
     this.initForm();
@@ -53,10 +55,10 @@ export class LoginComponent implements OnInit {
     const loginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({
       next: (response: AuthSuccess) => {
-          this.sessionService.logIn(response.token);
-          this.router.navigate(['/feed']);
+        this.sessionService.logIn(response.token);
+        this.router.navigate(['/feed']);
       },
-      error: () => (this.onError = true),
+      error: () => (this.errorMessage = 'Les identifiants sont incorrects.'),
     });
   }
 }
