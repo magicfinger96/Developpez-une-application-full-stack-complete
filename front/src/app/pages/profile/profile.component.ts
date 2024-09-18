@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit {
     this.form = this.fb.group(
       {
         username: [user.username, [Validators.required]],
-        email: [user.email, [Validators.required]],
+        email: [user.email, [Validators.required, Validators.email]],
       },
       { validators: noChangesValidator(user) }
     );
