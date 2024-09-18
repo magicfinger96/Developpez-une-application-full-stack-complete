@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.service;
 
+import com.openclassrooms.mddapi.exception.AlreadyUsedEmailException;
+import com.openclassrooms.mddapi.exception.AlreadyUsedUsernameException;
 import com.openclassrooms.mddapi.exception.UserNotFoundException;
 import com.openclassrooms.mddapi.model.entity.User;
 import com.openclassrooms.mddapi.model.request.LoginRequest;
@@ -42,11 +44,11 @@ public class AuthenticationService {
     public AuthSuccessResponse register(RegisterRequest registerRequest) throws Exception {
 
         if (userService.getUserDtoByEmail(registerRequest.getEmail()) != null) {
-            throw new Exception("L'adresse e-mail est déjà utilisée !");
+            throw new AlreadyUsedEmailException("L'adresse e-mail est déjà utilisée !");
         }
 
         if (userService.getUserDtoByUsername(registerRequest.getUsername()) != null) {
-            throw new Exception("Le nom d'utilisateur est déjà utilisé !");
+            throw new AlreadyUsedUsernameException("Le nom d'utilisateur est déjà utilisé !");
         }
 
         User user = new User();
