@@ -38,7 +38,7 @@ CREATE TABLE `SUBSCRIPTION` (
 CREATE TABLE `TOPIC` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(255),
-  `content` varchar(2000),
+  `description` varchar(2000),
   `created_at` timestamp
 );
 
@@ -55,7 +55,7 @@ ALTER TABLE `COMMENT` ADD FOREIGN KEY (`author_id`) REFERENCES `USER` (`id`);
 ALTER TABLE `SUBSCRIPTION` ADD FOREIGN KEY (`topic_id`) REFERENCES `TOPIC` (`id`);
 ALTER TABLE `SUBSCRIPTION` ADD FOREIGN KEY (`user_id`) REFERENCES `USER` (`id`);
 
-INSERT INTO `TOPIC` (`title`, `content`, `created_at`) VALUES
+INSERT INTO `TOPIC` (`title`, `description`, `created_at`) VALUES
 ('Java', 'Java est un langage de programmation orienté objet utilisé pour créer des applications robustes et performantes.', NOW()),
 ('Python', 'Python est un langage polyvalent connu pour sa simplicité et sa puissance, largement utilisé dans l\'intelligence artificielle et le développement web.', NOW()),
 ('JavaScript', 'JavaScript est le langage de programmation essentiel pour le développement web interactif, à la fois côté client et côté serveur.', NOW()),

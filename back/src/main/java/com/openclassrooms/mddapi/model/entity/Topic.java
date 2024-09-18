@@ -19,7 +19,7 @@ public class Topic {
     private int id;
 
     private String title;
-    private String content;
+    private String description;
 
     @CreationTimestamp
     @Column(name = "created_at")
