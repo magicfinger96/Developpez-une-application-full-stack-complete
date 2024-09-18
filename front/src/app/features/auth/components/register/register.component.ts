@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { SessionService } from '../../../../core/services/session.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -24,18 +25,18 @@ import { MatButton } from '@angular/material/button';
     MatLabel,
     ReactiveFormsModule,
     MatInputModule,
+    NgIf
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent implements OnInit {
+  public errorMessage: String = '';
   public form!: FormGroup;
   private fb: FormBuilder = inject(FormBuilder);
   private router: Router = inject(Router);
   private sessionService: SessionService = inject(SessionService);
   private authService: AuthService = inject(AuthService);
-
-  public onError = false;
 
   public ngOnInit(): void {
     this.initForm();
@@ -55,9 +56,9 @@ export class RegisterComponent implements OnInit {
       next: (response: AuthSuccess) => {
         localStorage.setItem('token', response.token);
         this.sessionService.logIn(response.token);
-          this.router.navigate(['/feed']);
+        this.router.navigate(['/feed']);
       },
-      error: () => (this.onError = true),
+      error: (errorResponse) => (this.errorMessage = errorResponse.error),
     });
   }
 }
