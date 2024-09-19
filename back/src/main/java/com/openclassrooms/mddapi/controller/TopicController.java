@@ -92,5 +92,27 @@ public class TopicController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * End point that unsubscribe the authenticated user to a topic.
+     *
+     * @param id id of the topic.
+     * @return a ResponseEntity containing a MessageResponse if the call succeeded.
+     * Otherwise, returns an error ResponseEntity.
+     */
+    @DeleteMapping("/api/topics/{id}/subscribe")
+    public ResponseEntity<?> unsubscribe(@PathVariable("id") final Integer id) {
+        int userId;
+        try {
+            userId = authenticationService.getAuthenticatedUserId();
+            return ResponseEntity.ok(userService.unsubscribe(userId, id));
+        } catch (UserNotFoundException userNotFoundException) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
 

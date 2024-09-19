@@ -196,4 +196,30 @@ public class UserService {
         user.getSubscriptions().add(topic);
         return new MessageResponse("Votre abonnement a été pris en compte !");
     }
+
+    /**
+     * Unsubscribes a user to a topic.
+     *
+     * @param userId  id of the user.
+     * @param topicId id of the topic.
+     * @return a MessageResponse if the unsubscription succeeded.
+     * @throws NotFoundException   if the user or the topic is not found.
+     * @throws BadRequestException if the user try to unsubscribe to a topic he's not subscribed to.
+     */
+    public MessageResponse unsubscribe(int userId, int topicId) throws NotFoundException, BadRequestException {
+        User user = getUserById(userId).orElseThrow(() ->
+                new UserNotFoundException("L'utilisateur n'a pas été trouvé.")
+        );
+
+        Topic topic = topicService.getTopicById(topicId).orElseThrow(() ->
+                new NotFoundException("Le topic n'existe pas")
+        );
+
+        if (!user.getSubscriptions().contains(topic)) {
+            throw new BadRequestException("Vous êtes déjà désabonné de ce thème.");
+        }
+
+        user.getSubscriptions().remove(topic);
+        return new MessageResponse("Votre abonnement a été pris en compte !");
+    }
 }
