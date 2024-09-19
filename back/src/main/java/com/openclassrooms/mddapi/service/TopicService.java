@@ -47,4 +47,14 @@ public class TopicService {
 
         return Optional.of(modelMapper.map(topic, TopicDto.class));
     }
+
+    /**
+     * Get a topic.
+     *
+     * @param id id of the fetched topic.
+     * @return a topic.
+     */
+    public Optional<Topic> getTopicById(Integer id) {
+        return topicRepository.findById(id);
+    }
 }

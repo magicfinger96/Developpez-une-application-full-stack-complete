@@ -1,13 +1,12 @@
 package com.openclassrooms.mddapi.service;
 
 
-import com.openclassrooms.mddapi.exception.AlreadyUsedEmailException;
-import com.openclassrooms.mddapi.exception.AlreadyUsedUsernameException;
-import com.openclassrooms.mddapi.exception.UserNotFoundException;
+import com.openclassrooms.mddapi.exception.*;
 import com.openclassrooms.mddapi.model.dto.TopicDto;
 import com.openclassrooms.mddapi.model.dto.UserDto;
 import com.openclassrooms.mddapi.model.entity.Topic;
 import com.openclassrooms.mddapi.model.entity.User;
+import com.openclassrooms.mddapi.model.response.MessageResponse;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,9 @@ public class UserService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private TopicService topicService;
 
     /**
      * Save the user.
@@ -167,5 +169,31 @@ public class UserService {
     public TopicDto[] getSubscriptions(int userId) {
         List<Topic> topics = userRepository.findSubscribedTopics(userId);
         return topics.stream().map(topic -> modelMapper.map(topic, TopicDto.class)).toList().toArray(TopicDto[]::new);
+    }
+
+    /**
+     * Subscribes a user to a topic.
+     *
+     * @param userId  id of the user.
+     * @param topicId id of the topic.
+     * @return a MessageResponse if the subscription succeeded.
+     * @throws NotFoundException   if the user or the topic is not found.
+     * @throws BadRequestException if the user try to subscribe to an already subscribed topic.
+     */
+    public MessageResponse subscribe(int userId, int topicId) throws NotFoundException, BadRequestException {
+        User user = getUserById(userId).orElseThrow(() ->
+                new UserNotFoundException("L'utilisateur n'a pas été trouvé.")
+        );
+
+        Topic topic = topicService.getTopicById(topicId).orElseThrow(() ->
+                new NotFoundException("Le topic n'existe pas")
+        );
+
+        if (user.getSubscriptions().contains(topic)) {
+            throw new BadRequestException("Vous êtes déjà abonné à ce thème.");
+        }
+
+        user.getSubscriptions().add(topic);
+        return new MessageResponse("Votre abonnement a été pris en compte !");
     }
 }
