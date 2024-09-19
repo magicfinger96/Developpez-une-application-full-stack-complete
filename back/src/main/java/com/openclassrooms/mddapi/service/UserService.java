@@ -4,13 +4,16 @@ package com.openclassrooms.mddapi.service;
 import com.openclassrooms.mddapi.exception.AlreadyUsedEmailException;
 import com.openclassrooms.mddapi.exception.AlreadyUsedUsernameException;
 import com.openclassrooms.mddapi.exception.UserNotFoundException;
+import com.openclassrooms.mddapi.model.dto.TopicDto;
 import com.openclassrooms.mddapi.model.dto.UserDto;
+import com.openclassrooms.mddapi.model.entity.Topic;
 import com.openclassrooms.mddapi.model.entity.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -153,5 +156,16 @@ public class UserService {
         user.setEmail(email);
 
         saveUser(user);
+    }
+
+    /**
+     * Get the topics the user subscribed to.
+     *
+     * @param userId id of the user.
+     * @return an array of TopicDto.
+     */
+    public TopicDto[] getSubscriptions(int userId) {
+        List<Topic> topics = userRepository.findSubscribedTopics(userId);
+        return topics.stream().map(topic -> modelMapper.map(topic, TopicDto.class)).toList().toArray(TopicDto[]::new);
     }
 }
