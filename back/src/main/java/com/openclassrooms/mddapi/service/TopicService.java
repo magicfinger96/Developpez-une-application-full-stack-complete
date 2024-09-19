@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service which handles topics logic.
@@ -24,10 +25,26 @@ public class TopicService {
     /**
      * Get all the topics in alphabetical order.
      *
-     * @return the topics.
+     * @return the topic dtos.
      */
     public TopicDto[] getTopics() {
         List<Topic> topics = topicRepository.findAllByOrderByTitleAsc();
         return topics.stream().map(topic -> modelMapper.map(topic, TopicDto.class)).toList().toArray(TopicDto[]::new);
+    }
+
+    /**
+     * Get a topic DTO.
+     *
+     * @param id id of the fetched topic.
+     * @return a topic dto.
+     */
+    public Optional<TopicDto> getTopicDtoById(Integer id) {
+        Optional<Topic> topic = topicRepository.findById(id);
+
+        if (topic.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(modelMapper.map(topic, TopicDto.class));
     }
 }

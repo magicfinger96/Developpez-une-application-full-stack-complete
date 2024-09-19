@@ -3,9 +3,13 @@ package com.openclassrooms.mddapi.controller;
 import com.openclassrooms.mddapi.model.dto.TopicDto;
 import com.openclassrooms.mddapi.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 /**
  * Handles the end points related to the topics.
@@ -25,6 +29,19 @@ public class TopicController {
     public ResponseEntity<TopicDto[]> getTopics() {
 
         return ResponseEntity.ok(topicService.getTopics());
+    }
+
+    /**
+     * End point that provides a topic.
+     *
+     * @param id id of the topic.
+     * @return a ResponseEntity containing the topic if the call succeeded.
+     *         Otherwise, returns an error ResponseEntity.
+     */
+    @GetMapping("/api/topics/{id}")
+    public ResponseEntity<TopicDto> getTopic(@PathVariable("id") final Integer id) {
+        Optional<TopicDto> topicDto = topicService.getTopicDtoById(id);
+        return topicDto.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
 
