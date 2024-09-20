@@ -7,7 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -28,7 +28,7 @@ public class TopicService {
      * @return the topic dtos.
      */
     public TopicDto[] getTopics() {
-        List<Topic> topics = topicRepository.findAllByOrderByTitleAsc();
+        Collection<Topic> topics = topicRepository.findAllByOrderByTitleAsc();
         return topics.stream().map(topic -> modelMapper.map(topic, TopicDto.class)).toList().toArray(TopicDto[]::new);
     }
 

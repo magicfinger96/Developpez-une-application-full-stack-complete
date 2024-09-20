@@ -12,7 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
 
@@ -167,7 +167,7 @@ public class UserService {
      * @return an array of TopicDto.
      */
     public TopicDto[] getSubscriptions(int userId) {
-        List<Topic> topics = userRepository.findSubscribedTopics(userId);
+        Collection<Topic> topics = userRepository.findSubscribedTopics(userId);
         return topics.stream().map(topic -> modelMapper.map(topic, TopicDto.class)).toList().toArray(TopicDto[]::new);
     }
 
