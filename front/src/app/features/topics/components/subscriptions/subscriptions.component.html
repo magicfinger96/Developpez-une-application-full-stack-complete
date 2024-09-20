@@ -6,4 +6,7 @@
     [canSubscribe]="false"
   >
   </app-topic-card>
+  <div *ngIf="(subscribedTopics$ | async)?.length === 0">
+    Vous n'êtes abonné à aucun thème.
+  </div>
 </div>
