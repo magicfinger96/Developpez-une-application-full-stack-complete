@@ -194,6 +194,7 @@ public class UserService {
         }
 
         user.getSubscriptions().add(topic);
+        this.userRepository.save(user);
         return new MessageResponse("Votre abonnement a été ajouté !");
     }
 
@@ -220,6 +221,7 @@ public class UserService {
         }
 
         user.getSubscriptions().remove(topic);
+        this.userRepository.save(user);
         return new MessageResponse("Votre abonnement a été retiré !");
     }
 }
