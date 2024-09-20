@@ -194,7 +194,7 @@ public class UserService {
         }
 
         user.getSubscriptions().add(topic);
-        return new MessageResponse("Votre abonnement a été pris en compte !");
+        return new MessageResponse("Votre abonnement a été ajouté !");
     }
 
     /**
@@ -220,6 +220,6 @@ public class UserService {
         }
 
         user.getSubscriptions().remove(topic);
-        return new MessageResponse("Votre abonnement a été pris en compte !");
+        return new MessageResponse("Votre abonnement a été retiré !");
     }
 }
