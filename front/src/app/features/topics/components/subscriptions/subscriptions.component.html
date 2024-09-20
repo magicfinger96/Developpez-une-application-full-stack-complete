@@ -4,6 +4,7 @@
     *ngFor="let topic of subscribedTopics$ | async"
     [topic]="topic"
     [canSubscribe]="false"
+    (topicUnsubscribed)="onTopicUnsubscribed()"
   >
   </app-topic-card>
   <div *ngIf="(subscribedTopics$ | async)?.length === 0">

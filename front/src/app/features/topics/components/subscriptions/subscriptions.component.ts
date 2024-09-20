@@ -24,5 +24,8 @@ export class SubscriptionsComponent implements OnInit {
   private loadTopics(): void {
     this.subscribedTopics$ = this.topicsService.subscriptions();
   }
+
+  public onTopicUnsubscribed(): void {
+    this.loadTopics();
   }
 }

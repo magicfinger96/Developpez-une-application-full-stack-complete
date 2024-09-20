@@ -1,9 +1,18 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Topic } from '../../interfaces/topic.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { SubscriptionsService } from '../../services/subscriptions.service';
 import { map, Observable, of } from 'rxjs';
+import { TopicsService } from '../../services/topics.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Response } from '../../interfaces/response.interface';
 
 /**
  * Component handling a topic card.
@@ -18,12 +27,13 @@ import { map, Observable, of } from 'rxjs';
 export class TopicCardComponent implements OnInit {
   @Input() topic!: Topic;
   @Input() canSubscribe!: boolean;
+  @Output() topicUnsubscribed = new EventEmitter<void>();
 
   buttonText!: string;
   disabledButtonText!: string;
 
-  private subscriptionsService: SubscriptionsService =
-    inject(SubscriptionsService);
+  private matSnackBar: MatSnackBar = inject(MatSnackBar);
+  private topicsService: TopicsService = inject(TopicsService);
   public isDisabled$!: Observable<boolean>;
 
   ngOnInit() {
@@ -49,40 +59,49 @@ export class TopicCardComponent implements OnInit {
   }
 
   /**
-   * Subscribes the user to the topic.
+   * Subscribes the user to the topic
+   * and refresh the button state if it succeeds.
    */
   private subscribe(): void {
-    this.subscriptionsService
-      .add({ topic_id: this.topic.id })
-      .subscribe((_) => {
+    this.topicsService.subscribe(this.topic.id).subscribe({
+      next: (response: Response) => {
         this.refreshDisableState();
-      });
+        this.matSnackBar.open(response.message, 'Close', { duration: 3000 });
+      },
+      error: (errorResponse) =>
+        this.matSnackBar.open(errorResponse.message, 'Close', {
+          duration: 3000,
+        }),
+    });
   }
 
   /**
    * Unsubscribes the user from the topic.
    */
   private unsubscribe(): void {
-    this.subscriptionsService.remove(this.topic.id).subscribe((_) => {
-      this.refreshDisableState();
+    this.topicsService.unsubscribe(this.topic.id).subscribe({
+      next: (response: Response) => {
+        this.topicUnsubscribed.emit();
+        this.matSnackBar.open(response.message, 'Close', { duration: 3000 });
+      },
+      error: (errorResponse) =>
+        this.matSnackBar.open(errorResponse.message, 'Close', {
+          duration: 3000,
+        }),
     });
   }
 
   /**
-   * Enable or disable the button of the card.
-   *
-   * Enable it if the user is subscribed to the topic and he can unsubscribe.
-   * Or if the user isn't subscribed to the topic and he can subscribe.
+   * Disables the button if the topic is in the subscriptions, otherwise enables it.
    */
   private refreshDisableState(): void {
-    this.isDisabled$ = this.subscriptionsService.mine().pipe(
+    this.isDisabled$ = this.topicsService.subscriptions().pipe(
       map((subscriptions) => {
-        let isSubscribed: boolean = subscriptions.find(
-          (subscription) => subscription.topic_id === this.topic.id
+        return subscriptions.find(
+          (subscription) => subscription.id === this.topic.id
         )
           ? true
           : false;
-        return this.canSubscribe ? isSubscribed : !isSubscribed;
       })
     );
   }
