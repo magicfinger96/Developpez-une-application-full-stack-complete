@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Topic } from '../interfaces/topic.interface';
-import { Response } from '../interfaces/response.interface';
+import { MessageResponse } from '../../../core/interfaces/message-response.interface';
 
 /**
  * Service handling the topics.
@@ -38,8 +38,8 @@ export class TopicsService {
    * @param topicId the topic id.
    * @returns an observable emitting the response to the call.
    */
-  public subscribe(topicId: number): Observable<Response> {
-    return this.httpClient.post<Response>(
+  public subscribe(topicId: number): Observable<MessageResponse> {
+    return this.httpClient.post<MessageResponse>(
       `${this.pathService}/${topicId}/subscribe`,
       null
     );
@@ -51,8 +51,8 @@ export class TopicsService {
    * @param topicId the topic id.
    * @returns an observable emitting the response to the call.
    */
-  public unsubscribe(topicId: number): Observable<Response> {
-    return this.httpClient.delete<Response>(
+  public unsubscribe(topicId: number): Observable<MessageResponse> {
+    return this.httpClient.delete<MessageResponse>(
       `${this.pathService}/${topicId}/subscribe`
     );
   }

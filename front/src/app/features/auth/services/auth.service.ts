@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Response } from '../../topics/interfaces/response.interface';
 import { User } from '../../../core/interfaces/user.interface';
 import { AuthSuccess } from '../interfaces/auth-success.interface';
 import { RegisterRequest } from '../interfaces/register-request.interface';
 import { LoginRequest } from '../interfaces/login-request.interface';
+import { MessageResponse } from '../../../core/interfaces/message-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +19,8 @@ export class AuthService {
     return this.httpClient.get<User>(`${this.pathService}/me`);
   }
 
-  public update(form: FormData): Observable<Response> {
-    return this.httpClient.put<Response>(`${this.pathService}/me`, form);
+  public update(form: FormData): Observable<MessageResponse> {
+    return this.httpClient.put<MessageResponse>(`${this.pathService}/me`, form);
   }
 
   public register(registerRequest: RegisterRequest): Observable<AuthSuccess> {

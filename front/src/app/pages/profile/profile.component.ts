@@ -16,7 +16,7 @@ import { AuthService } from '../../features/auth/services/auth.service';
 import { SessionService } from '../../core/services/session.service';
 import { User } from '../../core/interfaces/user.interface';
 import { noChangesValidator } from '../../shared/directives/no-changes.directive';
-import { Response } from '../../features/topics/interfaces/response.interface';
+import { MessageResponse } from '../../core/interfaces/message-response.interface';
 
 @Component({
   selector: 'app-profile',
@@ -67,7 +67,7 @@ export class ProfileComponent implements OnInit {
     formData.append('username', this.form!.get('username')?.value);
 
     this.authService.update(formData).subscribe({
-      next: (response: Response) => {
+      next: (response: MessageResponse) => {
         this.errorMessage = "";
         this.matSnackBar.open(response.message, "Close", { duration: 3000 });
       },

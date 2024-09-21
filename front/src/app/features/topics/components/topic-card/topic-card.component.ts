@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 import { map, Observable, of } from 'rxjs';
 import { TopicsService } from '../../services/topics.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Response } from '../../interfaces/response.interface';
+import { MessageResponse } from '../../../../core/interfaces/message-response.interface';
 
 /**
  * Component handling a topic card.
@@ -64,7 +64,7 @@ export class TopicCardComponent implements OnInit {
    */
   private subscribe(): void {
     this.topicsService.subscribe(this.topic.id).subscribe({
-      next: (response: Response) => {
+      next: (response: MessageResponse) => {
         this.refreshDisableState();
         this.matSnackBar.open(response.message, 'Close', { duration: 3000 });
       },
@@ -80,7 +80,7 @@ export class TopicCardComponent implements OnInit {
    */
   private unsubscribe(): void {
     this.topicsService.unsubscribe(this.topic.id).subscribe({
-      next: (response: Response) => {
+      next: (response: MessageResponse) => {
         this.topicUnsubscribed.emit();
         this.matSnackBar.open(response.message, 'Close', { duration: 3000 });
       },
