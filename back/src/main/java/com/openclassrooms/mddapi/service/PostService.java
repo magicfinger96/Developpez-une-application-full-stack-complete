@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Service which handles posts logic.
@@ -31,6 +32,22 @@ public class PostService {
     public PostDto[] getFeed(int userId, Sort sort) {
         Collection<Post> posts = postRepository.findPostsFromSubscribedTopicByUser(userId, sort);
         return posts.stream().map(post -> modelMapper.map(post, PostDto.class)).toList().toArray(PostDto[]::new);
+    }
+
+    /**
+     * Get a post DTO.
+     *
+     * @param id id of the fetched post.
+     * @return a post dto.
+     */
+    public Optional<PostDto> getPostById(int id) {
+        Optional<Post> post = postRepository.findById(id);
+
+        if (post.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(modelMapper.map(post, PostDto.class));
     }
 
     /**
