@@ -13,7 +13,7 @@ export class PostsService {
 
   public feed(order: string = 'desc'): Observable<Post[]> {
     return this.httpClient.get<Post[]>(
-      `${this.pathService}?sort=created_at&order=${order}`
+      `${this.pathService}?sort=creationDate&order=${order}`
     );
   }
 
