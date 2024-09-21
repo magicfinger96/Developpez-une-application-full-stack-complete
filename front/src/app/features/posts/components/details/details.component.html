@@ -8,7 +8,7 @@
     <span class="text">Autheur{{ post.author_id }}</span>
     <span class="text">Thème{{ post.topic_id }}</span>
   </span>
-  <span class="text description">{{ post.description }}</span>
+  <span class="text description">{{ post.content }}</span>
   <mat-divider></mat-divider>
   <app-comments [postId]="post.id"></app-comments>
 </div>
