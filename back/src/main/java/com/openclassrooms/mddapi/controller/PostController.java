@@ -8,6 +8,7 @@ import com.openclassrooms.mddapi.model.response.MessageResponse;
 import com.openclassrooms.mddapi.service.AuthenticationService;
 import com.openclassrooms.mddapi.service.PostService;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,9 @@ public class PostController {
 
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
 
     /**
@@ -48,6 +52,29 @@ public class PostController {
         } catch (UserNotFoundException exception) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    /**
+     * End point that create a new post from the authenticated user.
+     *
+     * @param postDto data representing the new Post.
+     * @return a ResponseEntity containing a MessageResponse if the call succeeded.
+     * Otherwise, returns an error ResponseEntity.
+     */
+    @PostMapping("/api/posts")
+    public ResponseEntity<MessageResponse> createPost(@Valid @RequestBody PostDto postDto) {
+
+        try {
+            postDto.setAuthor_id(authenticationService.getAuthenticatedUserId());
+            Post post = modelMapper.map(postDto, Post.class);
+            postService.createPost(post);
+        } catch (Exception e) {
+            System.out.println("dede erreur: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        MessageResponse response = new MessageResponse("L'article a été créé !");
+        return ResponseEntity.ok(response);
     }
 }
 

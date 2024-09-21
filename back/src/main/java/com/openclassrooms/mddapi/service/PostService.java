@@ -32,4 +32,13 @@ public class PostService {
         Collection<Post> posts = postRepository.findPostsFromSubscribedTopicByUser(userId, sort);
         return posts.stream().map(post -> modelMapper.map(post, PostDto.class)).toList().toArray(PostDto[]::new);
     }
+
+    /**
+     * Creates a post.
+     *
+     * @param post post saved.
+     */
+    public void createPost(Post post) {
+        postRepository.save(post);
+    }
 }
