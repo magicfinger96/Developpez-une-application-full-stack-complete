@@ -176,11 +176,10 @@ public class UserService {
      *
      * @param userId  id of the user.
      * @param topicId id of the topic.
-     * @return a MessageResponse if the subscription succeeded.
      * @throws NotFoundException   if the user or the topic is not found.
      * @throws BadRequestException if the user try to subscribe to an already subscribed topic.
      */
-    public MessageResponse subscribe(int userId, int topicId) throws NotFoundException, BadRequestException {
+    public void subscribe(int userId, int topicId) throws NotFoundException, BadRequestException {
         User user = getUserById(userId).orElseThrow(() ->
                 new UserNotFoundException("L'utilisateur n'a pas été trouvé.")
         );
@@ -195,7 +194,6 @@ public class UserService {
 
         user.getSubscriptions().add(topic);
         this.userRepository.save(user);
-        return new MessageResponse("Votre abonnement a été ajouté !");
     }
 
     /**
@@ -203,11 +201,10 @@ public class UserService {
      *
      * @param userId  id of the user.
      * @param topicId id of the topic.
-     * @return a MessageResponse if the unsubscription succeeded.
      * @throws NotFoundException   if the user or the topic is not found.
      * @throws BadRequestException if the user try to unsubscribe to a topic he's not subscribed to.
      */
-    public MessageResponse unsubscribe(int userId, int topicId) throws NotFoundException, BadRequestException {
+    public void unsubscribe(int userId, int topicId) throws NotFoundException, BadRequestException {
         User user = getUserById(userId).orElseThrow(() ->
                 new UserNotFoundException("L'utilisateur n'a pas été trouvé.")
         );
@@ -222,6 +219,5 @@ public class UserService {
 
         user.getSubscriptions().remove(topic);
         this.userRepository.save(user);
-        return new MessageResponse("Votre abonnement a été retiré !");
     }
 }

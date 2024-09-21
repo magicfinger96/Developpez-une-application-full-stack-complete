@@ -38,10 +38,10 @@ public class AuthenticationService {
      * generates the token.
      *
      * @param registerRequest contains user data to save.
-     * @return a AuthSuccessResponse object, containing the token.
+     * @return the token.
      * @throws Exception exception if the username or email already exists.
      */
-    public AuthSuccessResponse register(RegisterRequest registerRequest) throws Exception {
+    public String register(RegisterRequest registerRequest) throws Exception {
 
         if (userService.getUserDtoByEmail(registerRequest.getEmail()) != null) {
             throw new AlreadyUsedEmailException("L'adresse e-mail est déjà utilisée !");
@@ -58,8 +58,7 @@ public class AuthenticationService {
 
         user = userService.saveUser(user);
 
-        String token = jwtService.generateToken(user);
-        return new AuthSuccessResponse(token);
+        return jwtService.generateToken(user);
 
     }
 
@@ -68,18 +67,17 @@ public class AuthenticationService {
      * Checks the credentials and generate the token if it is correct.
      *
      * @param loginRequest contains credentials.
-     * @return a AuthSuccessResponse object, containing the token.
+     * @return the token.
      * @throws Exception if the credentials are wrong.
      */
-    public AuthSuccessResponse login(LoginRequest loginRequest) throws Exception {
+    public String login(LoginRequest loginRequest) throws Exception {
         User user = userService.getUserByEmailOrUsername(loginRequest.getEmailOrUsername());
 
         if ((user == null) || !passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new Exception();
         }
 
-        String token = jwtService.generateToken(user);
-        return new AuthSuccessResponse(token);
+        return jwtService.generateToken(user);
     }
 
     /**

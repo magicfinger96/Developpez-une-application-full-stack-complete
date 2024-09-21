@@ -83,7 +83,7 @@ public class TopicController {
         int userId;
         try {
             userId = authenticationService.getAuthenticatedUserId();
-            return ResponseEntity.ok(userService.subscribe(userId, id));
+            userService.subscribe(userId, id);
         } catch (UserNotFoundException userNotFoundException) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } catch (NotFoundException e) {
@@ -91,6 +91,7 @@ public class TopicController {
         } catch (BadRequestException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+        return ResponseEntity.ok(new MessageResponse("Votre abonnement a été ajouté !"));
     }
 
     /**
@@ -105,7 +106,8 @@ public class TopicController {
         int userId;
         try {
             userId = authenticationService.getAuthenticatedUserId();
-            return ResponseEntity.ok(userService.unsubscribe(userId, id));
+            userService.unsubscribe(userId, id);
+
         } catch (UserNotFoundException userNotFoundException) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } catch (NotFoundException e) {
@@ -113,6 +115,7 @@ public class TopicController {
         } catch (BadRequestException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+        return ResponseEntity.ok(new MessageResponse("Votre abonnement a été retiré !"));
     }
 }
 

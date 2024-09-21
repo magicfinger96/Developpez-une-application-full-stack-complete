@@ -31,7 +31,7 @@ public class AuthenticationController {
 
     @Autowired
     private UserService userService;
-    
+
     /**
      * End point logging the user in.
      *
@@ -41,13 +41,12 @@ public class AuthenticationController {
      */
     @PostMapping("/api/auth/login")
     public ResponseEntity<AuthSuccessResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
-        AuthSuccessResponse response;
         try {
-            response = authenticationService.login(loginRequest);
+            String token = authenticationService.login(loginRequest);
+            return ResponseEntity.ok(new AuthSuccessResponse(token));
         } catch (Exception exception) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        return ResponseEntity.ok(response);
     }
 
     /**
@@ -59,13 +58,12 @@ public class AuthenticationController {
      */
     @PostMapping("/api/auth/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) {
-        AuthSuccessResponse response;
         try {
-            response = authenticationService.register(registerRequest);
+            String token = authenticationService.register(registerRequest);
+            return ResponseEntity.ok(token);
         } catch (Exception exception) {
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
         }
-        return ResponseEntity.ok(response);
     }
 
     /**
@@ -89,7 +87,13 @@ public class AuthenticationController {
 
     }
 
-
+    /**
+     * End point that modify the authenticated user.
+     *
+     * @param email    the new email.
+     * @param username the new username.
+     * @return a ResponseEntity containing a MessageResponse if successful or an error ResponseEntity.
+     */
     @PutMapping("/api/auth/me")
     public ResponseEntity<?> updateMe(
             @NotBlank @Email @RequestParam String email,
@@ -102,7 +106,7 @@ public class AuthenticationController {
             userService.updateUser(authenticatedUserId, email, username);
         } catch (AlreadyUsedEmailException | AlreadyUsedUsernameException exception) {
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
-        } catch(UserNotFoundException exception){
+        } catch (UserNotFoundException exception) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
