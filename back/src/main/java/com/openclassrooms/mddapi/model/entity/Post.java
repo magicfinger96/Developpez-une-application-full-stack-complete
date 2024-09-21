@@ -29,7 +29,7 @@ public class Post {
     private Topic topic;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "author_id")
     private User author;
 
     @CreationTimestamp
