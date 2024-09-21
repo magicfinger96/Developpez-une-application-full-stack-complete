@@ -11,8 +11,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { PostsService } from '../../services/posts.service';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { TopicsService } from '../../../topics/services/topics.service';
+import { Post } from '../../interfaces/post.interface';
+import { MessageResponse } from '../../../../core/interfaces/message-response.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create',
@@ -33,7 +36,10 @@ export class CreateComponent implements OnInit {
   public form!: FormGroup;
   private topicsService: TopicsService = inject(TopicsService);
   private postsService: PostsService = inject(PostsService);
+  private matSnackBar: MatSnackBar = inject(MatSnackBar);
+  private router: Router = inject(Router);
   private fb: FormBuilder = inject(FormBuilder);
+  public errorMessage: String = '';
 
   public topics$ = this.topicsService.all();
 
@@ -50,12 +56,14 @@ export class CreateComponent implements OnInit {
   }
 
   public submit(): void {
-    const formData = new FormData();
-    formData.append('name', this.form!.get('name')?.value);
-    formData.append('surface', this.form!.get('surface')?.value);
-    formData.append('price', this.form!.get('price')?.value);
-    formData.append('description', this.form!.get('description')?.value);
-
-    this.postsService.create(formData);
+    const post = this.form?.value as Post;
+    this.postsService.create(post).subscribe({
+      next: (response: MessageResponse) => {
+        this.errorMessage = '';
+        this.matSnackBar.open(response.message, 'Close', { duration: 3000 });
+        this.router.navigate(['/feed']);
+      },
+      error: (errorResponse) => (this.errorMessage = errorResponse.error),
+    });
   }
 }
