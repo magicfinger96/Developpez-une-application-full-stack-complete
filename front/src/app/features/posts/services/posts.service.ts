@@ -21,7 +21,7 @@ export class PostsService {
     return this.httpClient.get<Post>(`${this.pathService}/${id}`);
   }
 
-  public create(form: FormData): Observable<MessageResponse> {
-    return this.httpClient.post<MessageResponse>(this.pathService, form);
+  public create(post: Post): Observable<MessageResponse> {
+    return this.httpClient.post<MessageResponse>(this.pathService, post);
   }
 }
