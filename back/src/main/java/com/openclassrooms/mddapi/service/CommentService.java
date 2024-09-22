@@ -32,4 +32,13 @@ public class CommentService {
         Collection<Comment> comments = commentRepository.findByPostOrderByCreationDateAsc(post);
         return comments.stream().map(comment -> modelMapper.map(comment, CommentDto.class)).toList().toArray(CommentDto[]::new);
     }
+
+    /**
+     * Creates a comment.
+     *
+     * @param comment comment to save.
+     */
+    public void createComment(Comment comment) {
+        commentRepository.save(comment);
+    }
 }
