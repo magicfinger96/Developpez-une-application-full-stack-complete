@@ -24,5 +24,5 @@ public class PostDto {
     @NotNull(message = "Le thème est requis.")
     Integer topic_id;
 
-    Date created_at;
+    Date creationDate;
 }
