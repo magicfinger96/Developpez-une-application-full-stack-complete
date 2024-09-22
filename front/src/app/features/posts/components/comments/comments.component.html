@@ -2,7 +2,7 @@
   <span class="text">Commentaires</span>
   <div class="list">
     <div *ngFor="let comment of comments$ | async" class="comment">
-      <span class="text">Auteur{{ comment.author_id }}</span>
+      <span class="text">{{ comment.author }}</span>
       <div class="content text">{{ comment.message }}</div>
     </div>
   </div>

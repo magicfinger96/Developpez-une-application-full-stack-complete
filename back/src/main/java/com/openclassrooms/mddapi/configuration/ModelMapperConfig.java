@@ -1,13 +1,8 @@
 package com.openclassrooms.mddapi.configuration;
 
-import com.openclassrooms.mddapi.model.dto.PostDto;
-import com.openclassrooms.mddapi.model.entity.Post;
-import com.openclassrooms.mddapi.model.entity.Topic;
-import com.openclassrooms.mddapi.model.entity.User;
-import com.openclassrooms.mddapi.repository.TopicRepository;
-import com.openclassrooms.mddapi.repository.UserRepository;
+import com.openclassrooms.mddapi.model.dto.CommentDto;
+import com.openclassrooms.mddapi.model.entity.Comment;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,15 +12,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ModelMapperConfig {
 
-    @Autowired
-    TopicRepository topicRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
+
+        modelMapper.typeMap(Comment.class, CommentDto.class).addMappings(mapper -> {
+            mapper.skip(CommentDto::setAuthor);
+        }).setPostConverter(context -> {
+            Comment comment = context.getSource();
+            CommentDto commentDto = context.getDestination();
+            commentDto.setAuthor(comment.getAuthor().getUsername());
+            return commentDto;
+        });
+
         return modelMapper;
     }
 }

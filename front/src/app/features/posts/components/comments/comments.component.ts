@@ -3,8 +3,16 @@ import { CommentsService } from '../../services/comments.service';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Comment } from '../../interfaces/comment.interface';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { CommentRequest } from '../../interfaces/commentRequest.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MessageResponse } from '../../../../core/interfaces/message-response.interface';
 
 @Component({
   selector: 'app-comments',
@@ -15,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class CommentsComponent {
   private commentsService: CommentsService = inject(CommentsService);
+  private matSnackBar: MatSnackBar = inject(MatSnackBar);
   private fb: FormBuilder = inject(FormBuilder);
 
   @Input() postId!: number;
@@ -27,18 +36,24 @@ export class CommentsComponent {
   }
 
   public ngOnInit(): void {
-    this.comments$ = this.commentsService.all(this.postId);
+    this.fetchComments();
   }
 
   public sendMessage(): void {
-    const comment = {
-      post_id: this.postId,
-      author_id: 1, // TODO this.sessionService.user?.id,
+    const commentRequest = {
+      postId: this.postId,
       message: this.commentForm.value.message,
-    } as Comment;
+    } as CommentRequest;
 
-    this.commentsService.send(comment).subscribe((_) => {
-      this.initMessageForm();
+    this.commentsService.send(commentRequest).subscribe({
+      next: (response: MessageResponse) => {
+        this.initMessageForm();
+        this.fetchComments();
+      },
+      error: () =>
+        this.matSnackBar.open("Une erreur est survenue !", 'Close', {
+          duration: 3000,
+        }),
     });
   }
 
@@ -46,5 +61,9 @@ export class CommentsComponent {
     this.commentForm = this.fb.group({
       message: ['', [Validators.required, Validators.min(10)]],
     });
+  }
+
+  private fetchComments(): void {
+    this.comments$ = this.commentsService.all(this.postId);
   }
 }
