@@ -3,8 +3,14 @@ import { CommentsService } from '../../services/comments.service';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Comment } from '../../interfaces/comment.interface';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { CommentRequest } from '../../interfaces/commentRequest.interface';
 
 @Component({
   selector: 'app-comments',
@@ -31,13 +37,12 @@ export class CommentsComponent {
   }
 
   public sendMessage(): void {
-    const comment = {
-      post_id: this.postId,
-      author_id: 1, // TODO this.sessionService.user?.id,
+    const commentRequest = {
+      postId: this.postId,
       message: this.commentForm.value.message,
-    } as Comment;
+    } as CommentRequest;
 
-    this.commentsService.send(comment).subscribe((_) => {
+    this.commentsService.send(commentRequest).subscribe((_) => {
       this.initMessageForm();
     });
   }
