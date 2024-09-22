@@ -19,10 +19,10 @@ public class PostDto {
     @NotBlank(message = "Le contenu est requis.")
     String content;
 
-    Integer author_id;
+    UserDto author;
 
     @NotNull(message = "Le thème est requis.")
-    Integer topic_id;
+    TopicDto topic;
 
     Date creationDate;
 }

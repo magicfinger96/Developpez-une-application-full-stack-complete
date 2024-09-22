@@ -26,24 +26,6 @@ public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
-
-        modelMapper.typeMap(PostDto.class, Post.class).addMappings(mapper -> {
-            mapper.skip(Post::setTopic);
-        }).setPostConverter(context -> {
-            PostDto postDto = context.getSource();
-            Post post = context.getDestination();
-
-            Topic topic = topicRepository.findById(postDto.getTopic_id())
-                    .orElseThrow(() -> new IllegalArgumentException("Le thème n'existe pas."));
-            post.setTopic(topic);
-
-            User author = userRepository.findById(postDto.getAuthor_id())
-                    .orElseThrow(() -> new IllegalArgumentException("L'auteur n'existe pas."));
-            post.setAuthor(author);
-
-            return post;
-        });
-
         return modelMapper;
     }
 }

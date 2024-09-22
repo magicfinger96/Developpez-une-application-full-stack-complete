@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.exception.UserNotFoundException;
 import com.openclassrooms.mddapi.model.dto.PostDto;
+import com.openclassrooms.mddapi.model.dto.UserDto;
 import com.openclassrooms.mddapi.model.entity.Post;
 import com.openclassrooms.mddapi.model.response.MessageResponse;
 import com.openclassrooms.mddapi.service.AuthenticationService;
@@ -66,7 +67,13 @@ public class PostController {
     public ResponseEntity<MessageResponse> createPost(@Valid @RequestBody PostDto postDto) {
 
         try {
-            postDto.setAuthor_id(authenticationService.getAuthenticatedUserId());
+
+            Optional<UserDto> user = authenticationService.getAuthenticatedUser();
+            if (user.isEmpty()) {
+                throw new Exception();
+            }
+
+            postDto.setAuthor(user.get());
             Post post = modelMapper.map(postDto, Post.class);
             postService.createPost(post);
         } catch (Exception e) {

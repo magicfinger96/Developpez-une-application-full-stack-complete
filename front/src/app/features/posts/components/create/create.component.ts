@@ -50,7 +50,7 @@ export class CreateComponent implements OnInit {
   private initForm(): void {
     this.form = this.fb.group({
       title: ['', [Validators.required]],
-      topic_id: ['', [Validators.required]],
+      topic: ['', [Validators.required]],
       content: ['', [Validators.required, Validators.max(2000)]],
     });
   }
