@@ -97,7 +97,7 @@ public class PostController {
      */
     @GetMapping("/api/posts/{id}")
     public ResponseEntity<PostDto> getPost(@PathVariable("id") final Integer id) {
-        Optional<PostDto> postDto = postService.getPostById(id);
+        Optional<PostDto> postDto = postService.getPostDtoById(id);
         return postDto.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

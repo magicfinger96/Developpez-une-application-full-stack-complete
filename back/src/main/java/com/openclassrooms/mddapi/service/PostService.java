@@ -40,7 +40,7 @@ public class PostService {
      * @param id id of the fetched post.
      * @return a post dto.
      */
-    public Optional<PostDto> getPostById(int id) {
+    public Optional<PostDto> getPostDtoById(int id) {
         Optional<Post> post = postRepository.findById(id);
 
         if (post.isEmpty()) {
@@ -48,6 +48,16 @@ public class PostService {
         }
 
         return Optional.of(modelMapper.map(post, PostDto.class));
+    }
+
+    /**
+     * Get a post.
+     *
+     * @param id id of the fetched post.
+     * @return a post.
+     */
+    public Optional<Post> getPostById(int id) {
+        return postRepository.findById(id);
     }
 
     /**
