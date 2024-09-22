@@ -11,6 +11,8 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CommentRequest } from '../../interfaces/commentRequest.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MessageResponse } from '../../../../core/interfaces/message-response.interface';
 
 @Component({
   selector: 'app-comments',
@@ -21,6 +23,7 @@ import { CommentRequest } from '../../interfaces/commentRequest.interface';
 })
 export class CommentsComponent {
   private commentsService: CommentsService = inject(CommentsService);
+  private matSnackBar: MatSnackBar = inject(MatSnackBar);
   private fb: FormBuilder = inject(FormBuilder);
 
   @Input() postId!: number;
@@ -33,7 +36,7 @@ export class CommentsComponent {
   }
 
   public ngOnInit(): void {
-    this.comments$ = this.commentsService.all(this.postId);
+    this.fetchComments();
   }
 
   public sendMessage(): void {
@@ -42,8 +45,15 @@ export class CommentsComponent {
       message: this.commentForm.value.message,
     } as CommentRequest;
 
-    this.commentsService.send(commentRequest).subscribe((_) => {
-      this.initMessageForm();
+    this.commentsService.send(commentRequest).subscribe({
+      next: (response: MessageResponse) => {
+        this.initMessageForm();
+        this.fetchComments();
+      },
+      error: () =>
+        this.matSnackBar.open("Une erreur est survenue !", 'Close', {
+          duration: 3000,
+        }),
     });
   }
 
@@ -51,5 +61,9 @@ export class CommentsComponent {
     this.commentForm = this.fb.group({
       message: ['', [Validators.required, Validators.min(10)]],
     });
+  }
+
+  private fetchComments(): void {
+    this.comments$ = this.commentsService.all(this.postId);
   }
 }
