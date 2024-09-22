@@ -7,6 +7,7 @@ import com.openclassrooms.mddapi.model.entity.Post;
 import com.openclassrooms.mddapi.model.response.MessageResponse;
 import com.openclassrooms.mddapi.service.AuthenticationService;
 import com.openclassrooms.mddapi.service.PostService;
+import com.openclassrooms.mddapi.service.UserService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class PostController {
 
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -67,8 +71,8 @@ public class PostController {
     public ResponseEntity<MessageResponse> createPost(@Valid @RequestBody PostDto postDto) {
 
         try {
-
-            Optional<UserDto> user = authenticationService.getAuthenticatedUser();
+            int id = authenticationService.getAuthenticatedUserId();
+            Optional<UserDto> user = userService.getUserDtoById(id);
             if (user.isEmpty()) {
                 throw new Exception();
             }
@@ -77,7 +81,6 @@ public class PostController {
             Post post = modelMapper.map(postDto, Post.class);
             postService.createPost(post);
         } catch (Exception e) {
-            System.out.println("dede erreur: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 

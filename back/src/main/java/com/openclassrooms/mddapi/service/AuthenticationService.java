@@ -3,11 +3,9 @@ package com.openclassrooms.mddapi.service;
 import com.openclassrooms.mddapi.exception.AlreadyUsedEmailException;
 import com.openclassrooms.mddapi.exception.AlreadyUsedUsernameException;
 import com.openclassrooms.mddapi.exception.UserNotFoundException;
-import com.openclassrooms.mddapi.model.dto.UserDto;
 import com.openclassrooms.mddapi.model.entity.User;
 import com.openclassrooms.mddapi.model.request.LoginRequest;
 import com.openclassrooms.mddapi.model.request.RegisterRequest;
-import com.openclassrooms.mddapi.model.response.AuthSuccessResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,8 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 /**
  * Service which handles the authentication logic.
@@ -89,11 +85,6 @@ public class AuthenticationService {
      * @return the id of the user.
      * @throws UserNotFoundException exception if there's no authenticated user.
      */
-    public Optional<UserDto> getAuthenticatedUser() throws UserNotFoundException {
-        int id = getAuthenticatedUserId();
-        return userService.getUserDtoById(id);
-    }
-
     public int getAuthenticatedUserId() throws UserNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
