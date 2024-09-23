@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TopicsService } from '../../services/topics.service';
 import { Observable } from 'rxjs';
 import { Topic } from '../../interfaces/topic.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-subscriptions',
@@ -14,15 +15,26 @@ import { Topic } from '../../interfaces/topic.interface';
 })
 export class SubscriptionsComponent implements OnInit {
   private topicsService: TopicsService = inject(TopicsService);
-
-  public subscribedTopics$!: Observable<Topic[]>;
+  private matSnackBar: MatSnackBar = inject(MatSnackBar);
+  public subscribedTopics: Topic[] = [];
 
   ngOnInit() {
     this.loadTopics();
   }
 
   private loadTopics(): void {
-    this.subscribedTopics$ = this.topicsService.subscriptions();
+    this.topicsService.subscriptions().subscribe({
+      next: (topics: Topic[]) => {
+        this.subscribedTopics = topics;
+      },
+      error: () => {
+        this.matSnackBar.open(
+          'Une erreur est survenue lors de la récupération des abonnements.',
+          'Close',
+          { duration: 3000 }
+        );
+      },
+    });
   }
 
   public onTopicUnsubscribed(): void {
