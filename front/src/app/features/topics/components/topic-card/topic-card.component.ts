@@ -9,7 +9,6 @@ import {
 import { Topic } from '../../interfaces/topic.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { map, Observable, of } from 'rxjs';
 import { TopicsService } from '../../services/topics.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageResponse } from '../../../../core/interfaces/message-response.interface';
@@ -30,21 +29,12 @@ export class TopicCardComponent implements OnInit {
   @Output() topicUnsubscribed = new EventEmitter<void>();
 
   buttonText!: string;
-  disabledButtonText!: string;
 
   private matSnackBar: MatSnackBar = inject(MatSnackBar);
   private topicsService: TopicsService = inject(TopicsService);
-  public isDisabled$!: Observable<boolean>;
 
   ngOnInit() {
     this.buttonText = this.canSubscribe ? "S'abonner" : 'Se désabonner';
-    this.disabledButtonText = this.canSubscribe ? 'Abonné(e)' : 'Désabonné(e)';
-
-    if (this.canSubscribe) {
-      this.refreshDisableState();
-    } else {
-      this.isDisabled$ = of(false);
-    }
   }
 
   /**
@@ -65,11 +55,11 @@ export class TopicCardComponent implements OnInit {
   private subscribe(): void {
     this.topicsService.subscribe(this.topic.id).subscribe({
       next: (response: MessageResponse) => {
-        this.refreshDisableState();
+        this.topic.subscribed = true;
         this.matSnackBar.open(response.message, 'Close', { duration: 3000 });
       },
       error: (errorResponse) =>
-        this.matSnackBar.open(errorResponse.message, 'Close', {
+        this.matSnackBar.open(errorResponse.error, 'Close', {
           duration: 3000,
         }),
     });
@@ -85,24 +75,9 @@ export class TopicCardComponent implements OnInit {
         this.matSnackBar.open(response.message, 'Close', { duration: 3000 });
       },
       error: (errorResponse) =>
-        this.matSnackBar.open(errorResponse.message, 'Close', {
+        this.matSnackBar.open(errorResponse.error, 'Close', {
           duration: 3000,
         }),
     });
-  }
-
-  /**
-   * Disables the button if the topic is in the subscriptions, otherwise enables it.
-   */
-  private refreshDisableState(): void {
-    this.isDisabled$ = this.topicsService.subscriptions().pipe(
-      map((subscriptions) => {
-        return subscriptions.find(
-          (subscription) => subscription.id === this.topic.id
-        )
-          ? true
-          : false;
-      })
-    );
   }
 }

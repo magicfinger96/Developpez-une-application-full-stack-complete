@@ -38,7 +38,18 @@ public class TopicController {
     @GetMapping("/api/topics")
     public ResponseEntity<TopicDto[]> getTopics() {
 
-        return ResponseEntity.ok(topicService.getTopics());
+        TopicDto[] topics = topicService.getTopics();
+        try {
+            int userId = authenticationService.getAuthenticatedUserId();
+            for (int i = 0; i < topics.length; i++) {
+                TopicDto topic = topics[i];
+                boolean subscribed = userService.isSubscribedTo(userId, topic.getId());
+                topic.setSubscribed(subscribed);
+            }
+        } catch (UserNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(topics);
     }
 
     /**
@@ -51,24 +62,19 @@ public class TopicController {
     @GetMapping("/api/topics/{id}")
     public ResponseEntity<TopicDto> getTopic(@PathVariable("id") final Integer id) {
         Optional<TopicDto> topicDto = topicService.getTopicDtoById(id);
-        return topicDto.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    /**
-     * End point that provides the topics the authenticated user is subscribed to.
-     *
-     * @return a ResponseEntity containing the topics if the call succeeded.
-     * Otherwise, returns an error ResponseEntity.
-     */
-    @GetMapping("/api/topics/subscribed")
-    public ResponseEntity<TopicDto[]> getSubscribedTopics() {
-        int id;
-        try {
-            id = authenticationService.getAuthenticatedUserId();
-        } catch (Exception exception) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (topicDto.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(userService.getSubscriptions(id));
+
+        try {
+            int userId = authenticationService.getAuthenticatedUserId();
+            boolean subscribed = userService.isSubscribedTo(userId, id);
+            topicDto.get().setSubscribed(subscribed);
+        } catch (UserNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(topicDto.get());
     }
 
     /**

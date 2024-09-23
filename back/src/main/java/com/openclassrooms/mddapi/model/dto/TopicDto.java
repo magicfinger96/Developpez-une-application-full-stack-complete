@@ -10,4 +10,5 @@ public class TopicDto {
     int id;
     String title;
     String description;
+    boolean subscribed;
 }

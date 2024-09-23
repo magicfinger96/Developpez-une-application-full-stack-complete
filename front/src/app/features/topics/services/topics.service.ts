@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Topic } from '../interfaces/topic.interface';
 import { MessageResponse } from '../../../core/interfaces/message-response.interface';
 
@@ -24,12 +24,12 @@ export class TopicsService {
   }
 
   /**
-   * Makes an API call to fetch the subscriptions of the user.
+   * Makes an API call to fetch the topics and filter only the ones subscribed by the user.
    *
    * @returns an observable containing a list of Topic.
    */
   public subscriptions(): Observable<Topic[]> {
-    return this.httpClient.get<Topic[]>(`${this.pathService}/subscribed`);
+    return this.all().pipe(map(topics => topics.filter(topic => topic.subscribed)));
   }
 
   /**

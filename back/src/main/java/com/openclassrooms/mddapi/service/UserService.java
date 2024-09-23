@@ -6,7 +6,6 @@ import com.openclassrooms.mddapi.model.dto.TopicDto;
 import com.openclassrooms.mddapi.model.dto.UserDto;
 import com.openclassrooms.mddapi.model.entity.Topic;
 import com.openclassrooms.mddapi.model.entity.User;
-import com.openclassrooms.mddapi.model.response.MessageResponse;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,14 +160,14 @@ public class UserService {
     }
 
     /**
-     * Get the topics the user subscribed to.
+     * Checks whether the user is subscribed to a topic or not.
      *
      * @param userId id of the user.
-     * @return an array of TopicDto.
+     * @param topicId id of the topic.
+     * @return true if he is subscribed else false.
      */
-    public TopicDto[] getSubscriptions(int userId) {
-        Collection<Topic> topics = userRepository.findSubscribedTopics(userId);
-        return topics.stream().map(topic -> modelMapper.map(topic, TopicDto.class)).toList().toArray(TopicDto[]::new);
+    public boolean isSubscribedTo(int userId, int topicId) {
+        return userRepository.findSubscribedTopics(userId).stream().anyMatch(topic -> topic.getId() == topicId);
     }
 
     /**
