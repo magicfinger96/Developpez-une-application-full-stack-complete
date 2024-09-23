@@ -26,9 +26,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
 })
-export class FeedComponent implements OnInit, OnDestroy {
+export class FeedComponent implements OnInit {
   private postsService: PostsService = inject(PostsService);
-  private feedSubscription: Subscription = new Subscription();
   private matSnackBar: MatSnackBar = inject(MatSnackBar);
 
   public sortOrder: string = 'desc';
@@ -38,18 +37,13 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.fetchFeed(this.sortOrder);
   }
 
-  public ngOnDestroy(): void {
-    this.feedSubscription.unsubscribe();
-  }
-
   public onSortClicked(): void {
     this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
     this.fetchFeed(this.sortOrder);
   }
 
   private fetchFeed(sortOrder: string): void {
-    this.feedSubscription.unsubscribe();
-    this.feedSubscription = this.postsService.feed(sortOrder).subscribe({
+    this.postsService.feed(sortOrder).subscribe({
       next: (posts: Post[]) => {
         this.posts = posts;
       },
