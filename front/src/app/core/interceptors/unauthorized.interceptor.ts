@@ -5,7 +5,7 @@ import {
 } from '@angular/common/http';
 import { SessionService } from '../services/session.service';
 import { inject } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { catchError, EMPTY, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 /**
@@ -27,6 +27,7 @@ export function unauthorizedInterceptor(
       if (err.status === 401 && router.url != '/login') {
         router.navigate(['/']);
         sessionService.logOut();
+        return EMPTY;
       }
       return throwError(() => err);
     })
