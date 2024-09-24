@@ -9,7 +9,7 @@ import {
  * Validator that checks if the form fields values are different from the initial ones.
  *
  * @param initialValues values of the form at initialization.
- * @returns
+ * @returns a validator.
  */
 export function noChangesValidator(initialValues: any): ValidatorFn {
   return (formGroup: AbstractControl): ValidationErrors | null => {

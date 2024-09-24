@@ -17,6 +17,9 @@ import { Post } from '../../interfaces/post.interface';
 import { MessageResponse } from '../../../../core/interfaces/message-response.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+/**
+ * Component of the post creation page.
+ */
 @Component({
   selector: 'app-create',
   standalone: true,
@@ -47,6 +50,9 @@ export class CreateComponent implements OnInit {
     this.initForm();
   }
 
+  /**
+   * Initializes the form.
+   */
   private initForm(): void {
     this.form = this.fb.group({
       title: ['', [Validators.required]],
@@ -55,6 +61,10 @@ export class CreateComponent implements OnInit {
     });
   }
 
+  /**
+   * Called when hitting the submit form.
+   * Request the post creation with the form data.
+   */
   public submit(): void {
     const post = this.form?.value as Post;
     this.postsService.create(post).subscribe({

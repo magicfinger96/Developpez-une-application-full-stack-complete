@@ -14,6 +14,9 @@ import { CommentRequest } from '../../interfaces/commentRequest.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageResponse } from '../../../../core/interfaces/message-response.interface';
 
+/**
+ * Component of the comments section.
+ */
 @Component({
   selector: 'app-comments',
   standalone: true,
@@ -39,6 +42,9 @@ export class CommentsComponent {
     this.fetchComments();
   }
 
+  /**
+   * Request a comment creation.
+   */
   public sendMessage(): void {
     const commentRequest = {
       postId: this.postId,
@@ -57,12 +63,18 @@ export class CommentsComponent {
     });
   }
 
+  /**
+   * Initializes the form.
+   */
   private initMessageForm() {
     this.commentForm = this.fb.group({
       message: ['', [Validators.required, Validators.min(10)]],
     });
   }
 
+  /**
+   * Fetch all the comments of a post.
+   */
   private fetchComments(): void {
     this.comments$ = this.commentsService.all(this.postId);
   }

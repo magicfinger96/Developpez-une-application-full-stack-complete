@@ -11,13 +11,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { SubscriptionsComponent } from "../../features/topics/components/subscriptions/subscriptions.component";
+import { SubscriptionsComponent } from '../../features/topics/components/subscriptions/subscriptions.component';
 import { AuthService } from '../../features/auth/services/auth.service';
 import { SessionService } from '../../core/services/session.service';
 import { User } from '../../core/interfaces/user.interface';
 import { noChangesValidator } from '../../shared/directives/no-changes.directive';
 import { MessageResponse } from '../../core/interfaces/message-response.interface';
 
+/**
+ * Component of the profile page.
+ */
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -27,8 +30,8 @@ import { MessageResponse } from '../../core/interfaces/message-response.interfac
     ReactiveFormsModule,
     MatInputModule,
     MatIconModule,
-    SubscriptionsComponent
-],
+    SubscriptionsComponent,
+  ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
@@ -46,11 +49,19 @@ export class ProfileComponent implements OnInit {
     this.authService.me().subscribe((user: User) => this.initForm(user));
   }
 
+  /**
+   * Log out from the session and redirects to the home page.
+   */
   public logout(): void {
     this.sessionService.logOut();
     this.router.navigate(['']);
   }
 
+  /**
+   * Initiliaze the profile form.
+   * 
+   * @param user user data injected inside the form.
+   */
   private initForm(user: User): void {
     this.form = this.fb.group(
       {
@@ -61,6 +72,10 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  /**
+   * Called on form submit button click.
+   * Update the user data.
+   */
   public submit(): void {
     const formData = new FormData();
     formData.append('email', this.form!.get('email')?.value);
@@ -68,8 +83,8 @@ export class ProfileComponent implements OnInit {
 
     this.authService.update(formData).subscribe({
       next: (response: MessageResponse) => {
-        this.errorMessage = "";
-        this.matSnackBar.open(response.message, "Close", { duration: 3000 });
+        this.errorMessage = '';
+        this.matSnackBar.open(response.message, 'Close', { duration: 3000 });
       },
       error: (errorResponse) => (this.errorMessage = errorResponse.error),
     });

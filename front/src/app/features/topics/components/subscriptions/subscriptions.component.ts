@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
 import { Topic } from '../../interfaces/topic.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+/**
+ * Component of the subscriptions section.
+ */
 @Component({
   selector: 'app-subscriptions',
   standalone: true,
@@ -22,6 +25,9 @@ export class SubscriptionsComponent implements OnInit {
     this.loadTopics();
   }
 
+  /**
+   * Load all the subscribed topics.
+   */
   private loadTopics(): void {
     this.topicsService.subscriptions().subscribe({
       next: (topics: Topic[]) => {
@@ -37,6 +43,9 @@ export class SubscriptionsComponent implements OnInit {
     });
   }
 
+  /**
+   * Called when a topic is unsubscribed to reload the subscriptions.
+   */
   public onTopicUnsubscribed(): void {
     this.loadTopics();
   }

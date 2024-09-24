@@ -2,7 +2,6 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import {
   ActivatedRoute,
-  Data,
   RouterLink,
   RouterOutlet,
 } from '@angular/router';
@@ -10,6 +9,9 @@ import { MatButton } from '@angular/material/button';
 import { HeaderComponent } from '../../core/components/header/header.component';
 import { Subscription } from 'rxjs';
 
+/**
+ * Base component for any authentication page.
+ */
 @Component({
   selector: 'app-auth',
   standalone: true,

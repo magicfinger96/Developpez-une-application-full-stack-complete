@@ -3,6 +3,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthComponent } from './auth.component';
 
+/**
+ * The routes of any authentication page.
+ */
 export const AUTH_ROUTES: Routes = [
   {
     path: '',

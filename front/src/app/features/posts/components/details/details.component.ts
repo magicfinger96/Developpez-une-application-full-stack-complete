@@ -8,6 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { CommentsComponent } from "../comments/comments.component";
 
+/**
+ * Component of the Post detail page.
+ */
 @Component({
   selector: 'app-details',
   standalone: true,
@@ -37,6 +40,9 @@ export class DetailsComponent implements OnInit {
     this.fetchPost();
   }
 
+  /**
+   * Fetch the post data.
+   */
   private fetchPost(): void {
     this.postsService.detail(this.postId).subscribe((post: Post) => {
       this.post = post;

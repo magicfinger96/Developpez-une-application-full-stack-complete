@@ -6,6 +6,10 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
+/**
+ * Component used as a layout for others.
+ * It allows to have side menu and header on all pages using it.
+ */
 @Component({
   selector: 'app-menu-layout',
   standalone: true,

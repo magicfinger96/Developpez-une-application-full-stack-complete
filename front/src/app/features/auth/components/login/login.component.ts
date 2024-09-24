@@ -17,6 +17,9 @@ import { LoginRequest } from '../../interfaces/login-request.interface';
 import { User } from '../../../../core/interfaces/user.interface';
 import { NgIf } from '@angular/common';
 
+/**
+ * Component of the login page.
+ */
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -44,6 +47,9 @@ export class LoginComponent implements OnInit {
     this.initForm();
   }
 
+  /**
+   * Initializes the form to log in.
+   */
   private initForm(): void {
     this.form = this.fb.group({
       emailOrUsername: ['', [Validators.required]],
@@ -51,6 +57,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * Called when hitting the submit button.
+   * Send a login request with the form data.
+   */
   public submit(): void {
     const loginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({

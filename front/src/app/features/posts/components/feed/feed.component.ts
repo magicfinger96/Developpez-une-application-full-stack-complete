@@ -11,6 +11,9 @@ import { Post } from '../../interfaces/post.interface';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+/**
+ * Component of the feed page.
+ */
 @Component({
   selector: 'app-feed',
   standalone: true,
@@ -37,11 +40,19 @@ export class FeedComponent implements OnInit {
     this.fetchFeed(this.sortOrder);
   }
 
+  /**
+   * Order the feed from the latest posts to the oldest or reverse.
+   */
   public onSortClicked(): void {
     this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
     this.fetchFeed(this.sortOrder);
   }
 
+  /**
+   * Fetch the feed.
+   * 
+   * @param sortOrder feed sorting order.
+   */
   private fetchFeed(sortOrder: string): void {
     this.postsService.feed(sortOrder).subscribe({
       next: (posts: Post[]) => {

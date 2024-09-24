@@ -5,6 +5,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
+/**
+ * Component of the header.
+ */
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -23,6 +26,9 @@ export class HeaderComponent {
   @Output() openMenuAction = new EventEmitter<void>();
   @Input() showButtons: boolean = true;
 
+  /**
+   * Open the side menu.
+   */
   public openMenu(): void {
     this.openMenuAction.emit();
   }

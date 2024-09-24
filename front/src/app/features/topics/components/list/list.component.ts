@@ -3,6 +3,9 @@ import { TopicsService } from '../../services/topics.service';
 import { TopicCardComponent } from '../topic-card/topic-card.component';
 import { CommonModule } from '@angular/common';
 
+/**
+ * Component of the topics list page.
+ */
 @Component({
   selector: 'app-list',
   standalone: true,

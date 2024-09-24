@@ -9,13 +9,15 @@ import {
 import { AuthService } from '../../services/auth.service';
 import { RegisterRequest } from '../../interfaces/register-request.interface';
 import { AuthSuccess } from '../../interfaces/auth-success.interface';
-import { User } from '../../../../core/interfaces/user.interface';
 import { Router } from '@angular/router';
 import { SessionService } from '../../../../core/services/session.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 
+/**
+ * Component of the register page.
+ */
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -42,6 +44,9 @@ export class RegisterComponent implements OnInit {
     this.initForm();
   }
 
+  /**
+   * Initializes the register form.
+   */
   private initForm(): void {
     this.form = this.fb.group({
       username: ['', [Validators.required]],
@@ -50,6 +55,9 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  /**
+   * Register the user with form data.
+   */
   public submit(): void {
     const registerRequest = this.form.value as RegisterRequest;
     this.authService.register(registerRequest).subscribe({
