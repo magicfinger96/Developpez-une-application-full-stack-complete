@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
         this.sessionService.logIn(response.token);
         this.router.navigate(['/feed']);
       },
-      error: (errorResponse) => (this.errorMessage = errorResponse.error),
+      error: (errorResponse) => (this.errorMessage = errorResponse.error.message),
     });
   }
 }

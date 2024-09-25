@@ -59,7 +59,7 @@ export class TopicCardComponent implements OnInit {
         this.matSnackBar.open(response.message, 'Close', { duration: 3000 });
       },
       error: (errorResponse) =>
-        this.matSnackBar.open(errorResponse.error, 'Close', {
+        this.matSnackBar.open(errorResponse.error.message, 'Close', {
           duration: 3000,
         }),
     });
@@ -75,7 +75,7 @@ export class TopicCardComponent implements OnInit {
         this.matSnackBar.open(response.message, 'Close', { duration: 3000 });
       },
       error: (errorResponse) =>
-        this.matSnackBar.open(errorResponse.error, 'Close', {
+        this.matSnackBar.open(errorResponse.error.message, 'Close', {
           duration: 3000,
         }),
     });

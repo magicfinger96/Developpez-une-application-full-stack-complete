@@ -79,9 +79,9 @@ public class AuthenticationController {
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) {
         try {
             String token = authenticationService.register(registerRequest);
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(new AuthSuccessResponse(token));
         } catch (Exception exception) {
-            return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(new MessageResponse(exception.getMessage()), HttpStatus.CONFLICT);
         }
     }
 
@@ -137,7 +137,7 @@ public class AuthenticationController {
             authenticatedUserId = authenticationService.getAuthenticatedUserId();
             userService.updateUser(authenticatedUserId, email, username);
         } catch (AlreadyUsedEmailException | AlreadyUsedUsernameException exception) {
-            return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(new MessageResponse(exception.getMessage()), HttpStatus.CONFLICT);
         } catch (UserNotFoundException exception) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }

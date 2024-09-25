@@ -95,7 +95,7 @@ export class ProfileComponent implements OnInit {
         this.user.username = username;
         this.initForm(this.user);
       },
-      error: (errorResponse) => (this.errorMessage = errorResponse.error),
+      error: (errorResponse) => (this.errorMessage = errorResponse.error.message),
     });
   }
 }
