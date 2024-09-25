@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -126,9 +127,9 @@ public class AuthenticationController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponse.class))}),
             @ApiResponse(responseCode = "401", description = "There is no authenticated user", content = @Content)})
     @PutMapping("/api/auth/me")
-    public ResponseEntity<?> updateMe(
-            @NotBlank @Email @RequestParam String email,
-            @NotBlank @RequestParam String username
+    public ResponseEntity<MessageResponse> updateMe(
+            @Size(max = 255, message = "L'adresse mail ne doit pas excéder 255 caractères.") @NotBlank @Email @RequestParam String email,
+            @Size(max = 255, message = "Le nom d'utilisateur ne doit pas excéder 255 caractères.") @NotBlank @RequestParam String username
     ) {
 
         int authenticatedUserId;
