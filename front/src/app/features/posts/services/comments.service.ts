@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Comment } from '../interfaces/comment.interface';
-import { CommentRequest } from '../interfaces/commentRequest.interface';
+import { CommentRequest } from '../interfaces/comment-request.interface';
 import { MessageResponse } from '../../../core/interfaces/message-response.interface';
 
 /**

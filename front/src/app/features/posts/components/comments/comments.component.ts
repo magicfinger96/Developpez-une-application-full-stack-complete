@@ -10,7 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { CommentRequest } from '../../interfaces/commentRequest.interface';
+import { CommentRequest } from '../../interfaces/comment-request.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageResponse } from '../../../../core/interfaces/message-response.interface';
 
