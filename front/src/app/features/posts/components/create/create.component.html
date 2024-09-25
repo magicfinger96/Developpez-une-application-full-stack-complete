@@ -7,8 +7,8 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <mat-form-field appearance="outline">
     <mat-label>Sélectionner un thème</mat-label>
-    <mat-select ngDefaultControl formControlName="topic">
-      <mat-option *ngFor="let topic of topics$ | async" [value]="topic">
+    <mat-select ngDefaultControl formControlName="topicId">
+      <mat-option *ngFor="let topic of topics$ | async" [value]="topic.id">
         {{ topic.title }}
       </mat-option>
     </mat-select>

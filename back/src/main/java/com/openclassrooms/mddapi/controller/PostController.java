@@ -2,12 +2,10 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.exception.UserNotFoundException;
 import com.openclassrooms.mddapi.model.dto.PostDto;
-import com.openclassrooms.mddapi.model.dto.UserDto;
-import com.openclassrooms.mddapi.model.entity.Post;
+import com.openclassrooms.mddapi.model.request.PostRequest;
 import com.openclassrooms.mddapi.model.response.MessageResponse;
 import com.openclassrooms.mddapi.service.AuthenticationService;
 import com.openclassrooms.mddapi.service.PostService;
-import com.openclassrooms.mddapi.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -16,8 +14,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,12 +34,6 @@ public class PostController {
 
     @Autowired
     private AuthenticationService authenticationService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
 
     /**
@@ -73,13 +65,15 @@ public class PostController {
 
         } catch (UserNotFoundException exception) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } catch (InvalidDataAccessApiUsageException exception) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     /**
      * End point that create a new post from the authenticated user.
      *
-     * @param postDto data representing the new Post.
+     * @param postRequest data to create the new Post.
      * @return a ResponseEntity containing a MessageResponse if the call succeeded.
      * Otherwise, returns an error ResponseEntity.
      */
@@ -92,18 +86,10 @@ public class PostController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponse.class))}),
             @ApiResponse(responseCode = "401", description = "JWT is wrong or missing", content = @Content)})
     @PostMapping("/api/posts")
-    public ResponseEntity<MessageResponse> createPost(@Valid @RequestBody PostDto postDto) {
+    public ResponseEntity<MessageResponse> createPost(@Valid @RequestBody PostRequest postRequest) {
 
         try {
-            int id = authenticationService.getAuthenticatedUserId();
-            Optional<UserDto> user = userService.getUserDtoById(id);
-            if (user.isEmpty()) {
-                throw new Exception();
-            }
-
-            postDto.setAuthor(user.get());
-            Post post = modelMapper.map(postDto, Post.class);
-            postService.createPost(post);
+            postService.createPost(postRequest);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

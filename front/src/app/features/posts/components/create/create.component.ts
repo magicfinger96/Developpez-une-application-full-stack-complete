@@ -16,6 +16,7 @@ import { TopicsService } from '../../../topics/services/topics.service';
 import { Post } from '../../interfaces/post.interface';
 import { MessageResponse } from '../../../../core/interfaces/message-response.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PostRequest } from '../../interfaces/post-request.interface';
 
 /**
  * Component of the post creation page.
@@ -56,7 +57,7 @@ export class CreateComponent implements OnInit {
   private initForm(): void {
     this.form = this.fb.group({
       title: ['', [Validators.required]],
-      topic: ['', [Validators.required]],
+      topicId: ['', [Validators.required]],
       content: ['', [Validators.required, Validators.max(2000)]],
     });
   }
@@ -66,7 +67,7 @@ export class CreateComponent implements OnInit {
    * Request the post creation with the form data.
    */
   public submit(): void {
-    const post = this.form?.value as Post;
+    const post = this.form?.value as PostRequest;
     this.postsService.create(post).subscribe({
       next: (response: MessageResponse) => {
         this.errorMessage = '';

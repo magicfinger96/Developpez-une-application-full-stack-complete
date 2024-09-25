@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from '../interfaces/post.interface';
 import { MessageResponse } from '../../../core/interfaces/message-response.interface';
+import { PostRequest } from '../interfaces/post-request.interface';
 
 /**
  * Service handling the posts.
@@ -39,10 +40,10 @@ export class PostsService {
   /**
    * Create a post.
    *
-   * @param post post-to-create data
+   * @param postRequest data to create the post.
    * @returns a successfull message or an error.
    */
-  public create(post: Post): Observable<MessageResponse> {
-    return this.httpClient.post<MessageResponse>(this.pathService, post);
+  public create(postRequest: PostRequest): Observable<MessageResponse> {
+    return this.httpClient.post<MessageResponse>(this.pathService, postRequest);
   }
 }
