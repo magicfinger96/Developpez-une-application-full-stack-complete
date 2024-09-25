@@ -44,9 +44,13 @@ export class ProfileComponent implements OnInit {
   private fb: FormBuilder = inject(FormBuilder);
 
   public errorMessage: String = '';
+  private user! : User;
 
   public ngOnInit(): void {
-    this.authService.me().subscribe((user: User) => this.initForm(user));
+    this.authService.me().subscribe((user: User) => {
+      this.user = user;
+      this.initForm(user);
+    });
   }
 
   /**
@@ -78,13 +82,18 @@ export class ProfileComponent implements OnInit {
    */
   public submit(): void {
     const formData = new FormData();
-    formData.append('email', this.form!.get('email')?.value);
-    formData.append('username', this.form!.get('username')?.value);
+    let email : string = this.form!.get('email')?.value;
+    let username : string = this.form!.get('username')?.value;
+    formData.append('email', email);
+    formData.append('username', username);
 
     this.authService.update(formData).subscribe({
       next: (response: MessageResponse) => {
         this.errorMessage = '';
         this.matSnackBar.open(response.message, 'Close', { duration: 3000 });
+        this.user.email = email;
+        this.user.username = username;
+        this.initForm(this.user);
       },
       error: (errorResponse) => (this.errorMessage = errorResponse.error),
     });
