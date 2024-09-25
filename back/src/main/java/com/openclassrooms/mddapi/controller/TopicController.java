@@ -53,8 +53,7 @@ public class TopicController {
         TopicDto[] topics = topicService.getTopics();
         try {
             int userId = authenticationService.getAuthenticatedUserId();
-            for (int i = 0; i < topics.length; i++) {
-                TopicDto topic = topics[i];
+            for (TopicDto topic : topics) {
                 boolean subscribed = userService.isSubscribedTo(userId, topic.getId());
                 topic.setSubscribed(subscribed);
             }
