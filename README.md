@@ -31,3 +31,6 @@ default-character-set=utf8mb4
 - Execute `mvn spring-boot:run` (If `mvn` is not recognized, follow instructions [here](https://www.baeldung.com/install-maven-on-windows-linux-mac))
 
 You are now ready to go!
+
+## Swagger documentation:
+http://localhost:8080/swagger-ui/index.html
