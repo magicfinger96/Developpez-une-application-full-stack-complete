@@ -10,6 +10,11 @@ import com.openclassrooms.mddapi.model.response.AuthSuccessResponse;
 import com.openclassrooms.mddapi.model.response.MessageResponse;
 import com.openclassrooms.mddapi.service.AuthenticationService;
 import com.openclassrooms.mddapi.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -39,6 +44,12 @@ public class AuthenticationController {
      * @return a ResponseEntity containing the jwt token if succeeded. Otherwise, an
      * error ResponseEntity.
      */
+    @Operation(summary = "Log the user in")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Logged in the user", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = AuthSuccessResponse.class))}),
+            @ApiResponse(responseCode = "401", description = "The credentials are wrong", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Input data are missing or not valid", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponse.class))})})
     @PostMapping("/api/auth/login")
     public ResponseEntity<AuthSuccessResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         try {
@@ -56,6 +67,13 @@ public class AuthenticationController {
      * @return a ResponseEntity containing the jwt token if succeeded. Otherwise, an
      * error ResponseEntity.
      */
+    @Operation(summary = "Register the user")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Registered the user", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = AuthSuccessResponse.class))}),
+            @ApiResponse(responseCode = "400", description = "Input data are missing or not valid", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponse.class))}),
+            @ApiResponse(responseCode = "409", description = "The email or username is already registered", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponse.class))})})
     @PostMapping("/api/auth/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) {
         try {
@@ -72,6 +90,11 @@ public class AuthenticationController {
      * @return a ResponseEntity containing the user. Otherwise, returns an error
      * ResponseEntity.
      */
+    @Operation(summary = "Fetch the authenticated user")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Fetched the user", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = UserDto.class))}),
+            @ApiResponse(responseCode = "404", description = "The user info can't be found", content = @Content),
+            @ApiResponse(responseCode = "401", description = "There is no authenticated user", content = @Content)})
     @GetMapping("/api/auth/me")
     public ResponseEntity<UserDto> getMe() {
 
@@ -94,6 +117,14 @@ public class AuthenticationController {
      * @param username the new username.
      * @return a ResponseEntity containing a MessageResponse if successful or an error ResponseEntity.
      */
+    @Operation(summary = "Update the authenticated user")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated the user", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponse.class))}),
+            @ApiResponse(responseCode = "400", description = "Input data are missing or not valid", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponse.class))}),
+            @ApiResponse(responseCode = "409", description = "The email or username is already used", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponse.class))}),
+            @ApiResponse(responseCode = "401", description = "There is no authenticated user", content = @Content)})
     @PutMapping("/api/auth/me")
     public ResponseEntity<?> updateMe(
             @NotBlank @Email @RequestParam String email,
