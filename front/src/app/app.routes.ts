@@ -3,6 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { MenuLayoutComponent } from './core/components/menu-layout/menu-layout.component';
 import { UnauthGuard } from './core/guards/unauth.guard';
 import { AuthGuard } from './core/guards/auth.guard';
+import { FeedComponent } from './features/posts/components/feed/feed.component';
 
 export const routes: Routes = [
   { path: '', canActivate: [UnauthGuard], component: HomeComponent },
@@ -42,4 +43,5 @@ export const routes: Routes = [
       },
     ],
   },
+  { path: '**', redirectTo: 'feed', pathMatch: 'full' }
 ];

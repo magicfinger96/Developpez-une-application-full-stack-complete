@@ -1,12 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PostsService } from '../../services/posts.service';
 import { Post } from '../../interfaces/post.interface';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-import { CommentsComponent } from "../comments/comments.component";
+import { CommentsComponent } from '../comments/comments.component';
 
 /**
  * Component of the Post detail page.
@@ -20,13 +20,14 @@ import { CommentsComponent } from "../comments/comments.component";
     MatIconModule,
     MatDividerModule,
     RouterModule,
-    CommentsComponent
-],
+    CommentsComponent,
+  ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss',
 })
 export class DetailsComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
+  private router: Router = inject(Router);
   private postsService: PostsService = inject(PostsService);
 
   postId: string;
@@ -44,8 +45,11 @@ export class DetailsComponent implements OnInit {
    * Fetch the post data.
    */
   private fetchPost(): void {
-    this.postsService.detail(this.postId).subscribe((post: Post) => {
-      this.post = post;
+    this.postsService.detail(this.postId).subscribe({
+      next: (post: Post) => {
+        this.post = post;
+      },
+      error: () => this.router.navigate(['/feed']),
     });
   }
 }
