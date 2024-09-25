@@ -8,6 +8,13 @@ import com.openclassrooms.mddapi.model.response.MessageResponse;
 import com.openclassrooms.mddapi.service.AuthenticationService;
 import com.openclassrooms.mddapi.service.PostService;
 import com.openclassrooms.mddapi.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +53,18 @@ public class PostController {
      * @return a ResponseEntity containing the posts if the call succeeded.
      * Otherwise, returns an error ResponseEntity.
      */
+    @Operation(summary = "Get the user feed")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the feed", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))}),
+            @ApiResponse(responseCode = "400", description = "The sort or order parameters are invalid", content = @Content),
+            @ApiResponse(responseCode = "401", description = "JWT is wrong or missing", content = @Content)})
     @GetMapping("/api/posts")
-    public ResponseEntity<PostDto[]> getFeed(@RequestParam(defaultValue = "createdAt") String sort,
-                                             @RequestParam(defaultValue = "desc") String order) {
+    public ResponseEntity<PostDto[]> getFeed(
+            @Parameter(description = "Field of the post to sort")
+            @RequestParam(defaultValue = "creationDate") String sort,
+            @Parameter(description = "The sort order")
+            @RequestParam(defaultValue = "desc") String order) {
         try {
             int userId = authenticationService.getAuthenticatedUserId();
 
@@ -67,6 +83,14 @@ public class PostController {
      * @return a ResponseEntity containing a MessageResponse if the call succeeded.
      * Otherwise, returns an error ResponseEntity.
      */
+    @Operation(summary = "Create a post")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Created the post", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponse.class))}),
+            @ApiResponse(responseCode = "404", description = "Topic or user not found", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Input data are missing or not valid", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponse.class))}),
+            @ApiResponse(responseCode = "401", description = "JWT is wrong or missing", content = @Content)})
     @PostMapping("/api/posts")
     public ResponseEntity<MessageResponse> createPost(@Valid @RequestBody PostDto postDto) {
 
@@ -95,6 +119,12 @@ public class PostController {
      * @return a ResponseEntity containing the post if the call succeeded.
      * Otherwise, returns an error ResponseEntity.
      */
+    @Operation(summary = "Get a post by its id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the post", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = PostDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Post not found", content = @Content),
+            @ApiResponse(responseCode = "401", description = "JWT is wrong or missing", content = @Content)})
     @GetMapping("/api/posts/{id}")
     public ResponseEntity<PostDto> getPost(@PathVariable("id") final Integer id) {
         Optional<PostDto> postDto = postService.getPostDtoById(id);
