@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TopicCardComponent } from '../topic-card/topic-card.component';
 import { CommonModule } from '@angular/common';
 import { TopicsService } from '../../services/topics.service';
-import { Observable } from 'rxjs';
 import { Topic } from '../../interfaces/topic.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
