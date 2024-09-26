@@ -9,6 +9,7 @@ import com.openclassrooms.mddapi.service.AuthenticationService;
 import com.openclassrooms.mddapi.service.TopicService;
 import com.openclassrooms.mddapi.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -48,19 +50,27 @@ public class TopicController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
             @ApiResponse(responseCode = "401", description = "JWT is wrong or missing", content = @Content)})
     @GetMapping("/api/topics")
-    public ResponseEntity<TopicDto[]> getTopics() {
-
-        TopicDto[] topics = topicService.getTopics();
+    public ResponseEntity<List<TopicDto>> getTopics(
+            @Parameter(description = "Field to filter by subscribed topics")
+            @RequestParam(required = false) Boolean subscribed
+    ) {
         try {
             int userId = authenticationService.getAuthenticatedUserId();
+            List<TopicDto> topics = topicService.getTopics();
+
             for (TopicDto topic : topics) {
-                boolean subscribed = userService.isSubscribedTo(userId, topic.getId());
-                topic.setSubscribed(subscribed);
+                boolean isSubscribed = userService.isSubscribedTo(userId, topic.getId());
+                topic.setSubscribed(isSubscribed);
             }
+
+            if (subscribed != null) {
+                topics = topics.stream().filter((topic) -> subscribed == topic.isSubscribed()).toList();
+            }
+
+            return ResponseEntity.ok(topics);
         } catch (UserNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(topics);
     }
 
     /**

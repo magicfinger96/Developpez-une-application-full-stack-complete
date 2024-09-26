@@ -29,7 +29,7 @@ export class TopicsService {
    * @returns an observable containing a list of Topic.
    */
   public subscriptions(): Observable<Topic[]> {
-    return this.all().pipe(map(topics => topics.filter(topic => topic.subscribed)));
+    return this.httpClient.get<Topic[]>(`${this.pathService}?subscribed=true`);
   }
 
   /**
