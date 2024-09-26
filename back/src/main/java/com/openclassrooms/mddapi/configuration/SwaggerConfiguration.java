@@ -19,7 +19,7 @@ public class SwaggerConfiguration {
     public OpenAPI openAPI() {
         return new OpenAPI().addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()))
-                .info(new Info().title("MDD API").description("API which handles rentals").version("1.0"));
+                .info(new Info().title("Swagger for MDD API").description("The documentation and examples of the MDD API").version("1.0"));
     }
 
     private SecurityScheme createAPIKeyScheme() {
