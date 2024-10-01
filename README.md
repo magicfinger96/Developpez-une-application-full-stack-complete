@@ -3,7 +3,7 @@
 
 ## Setup the DDB:
 - Download MySQL command line client from your browser
-- Set "root" as the password and username
+- Set your own password and username
 - To prevent encoding issue, add thoses lines inside `my.ini` file (mine is inside `C:\ProgramData\MySQL\MySQL Server 8.0`):
 ```
 [client]
@@ -26,7 +26,7 @@ default-character-set=utf8mb4
 - Then execute `npm run start` to run the front project
 
 ## Run the back:
-- Past your keys inside `back\src\main\resources\application.properties`
+- Create the environment variables (`MDD_JWT_PUBLIC_KEY`, `MDD_JWT_PRIVATE_KEY`, `MDD_DDB_USERNAME`, `MDD_DDB_PASSWORD`) with the secret keys
 - Open a terminal inside `back` folder
 - Execute `mvn spring-boot:run` (If `mvn` is not recognized, follow instructions [here](https://www.baeldung.com/install-maven-on-windows-linux-mac))
 
