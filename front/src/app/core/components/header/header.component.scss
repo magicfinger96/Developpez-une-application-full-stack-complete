@@ -1,0 +1,34 @@
+@media screen and (max-width: 433px) {
+  mat-toolbar > button[mat-button],
+  mat-toolbar > .profile {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 432px) {
+  .menu-button {
+    display: none;
+  }
+}
+
+.toolbar {
+  position: fixed;
+  z-index: 1000;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar-logo {
+  height: 100%;
+}
+
+.profile {
+  cursor: pointer;
+  height: 40px;
+}
+
+mat-toolbar > .profile {
+  margin-left: 20px;
+}

@@ -1,0 +1,13 @@
+<h1>Abonnements</h1>
+<div class="list">
+  <app-topic-card
+    *ngFor="let topic of subscribedTopics"
+    [topic]="topic"
+    [canSubscribe]="false"
+    (topicUnsubscribed)="onTopicUnsubscribed()"
+  >
+  </app-topic-card>
+  <div *ngIf="subscribedTopics?.length === 0">
+    Vous n'êtes abonné à aucun thème.
+  </div>
+</div>

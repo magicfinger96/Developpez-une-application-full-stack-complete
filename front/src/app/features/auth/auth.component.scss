@@ -1,0 +1,63 @@
+@use "variables";
+
+.header {
+  padding-top: 26px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: fit-content;
+
+  button {
+    margin-left: 15px;
+  }
+
+  span {
+    flex-grow: 1;
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 24px;
+    text-align: center;
+  }
+}
+
+mat-icon {
+  transform: scale(2);
+}
+
+@media screen and (max-width: 749px) {
+  app-header {
+    display: none;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: center;
+
+    button {
+      margin-right: auto;
+      margin-left: 20px;
+    }
+
+    img {
+      max-width: calc(100% - 40px);
+    }
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .content {
+    padding-top: variables.$header-height;
+  }
+
+  .header {
+    align-items: center;
+
+    img {
+      display: none;
+    }
+
+    span {
+      margin-left: -80px;
+    }
+  }
+}

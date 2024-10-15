@@ -1,25 +1,36 @@
-# P6-Full-Stack-reseau-dev
 
-## Front
+# Monde de Dév (MDD)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+## Setup the DDB:
+- Download MySQL command line client from your browser
+- Set your own password and username
+- To prevent encoding issue, add thoses lines inside `my.ini` file (mine is inside `C:\ProgramData\MySQL\MySQL Server 8.0`):
+```
+[client]
+default-character-set=utf8mb4
 
-Don't forget to install your node_modules before starting (`npm install`).
+[mysqld]
+character-set-server=utf8mb4
+collation-server=utf8mb4_general_ci
 
-### Development server
+[mysql]
+default-character-set=utf8mb4
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Copy the absolute path of `data.sql` which is inside `Back\src\main\resources` folder of this project
+- In the MySQL CLI, enter: `source ` followed by the absolute path of `data.sql`
 
-### Build
+## Run the Front:
+- Open a terminal inside `front` folder
+- Execute `npm install` to install the dependencies
+- Then execute `npm run start` to run the front project
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Run the back:
+- Create the environment variables (`MDD_JWT_PUBLIC_KEY`, `MDD_JWT_PRIVATE_KEY`, `MDD_DDB_USERNAME`, `MDD_DDB_PASSWORD`) with the secret keys
+- Open a terminal inside `back` folder
+- Execute `mvn spring-boot:run` (If `mvn` is not recognized, follow instructions [here](https://www.baeldung.com/install-maven-on-windows-linux-mac))
 
-### Where to start
+You are now ready to go!
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
-
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
-
-Note: I recommend to use material however it's not mandatory, if you prefer you can get ride of it.
-
-Good luck!
+## Swagger documentation:
+http://localhost:8080/swagger-ui/index.html

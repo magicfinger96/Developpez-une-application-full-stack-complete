@@ -1,0 +1,50 @@
+<mat-sidenav-container (backdropClick)="sidenav.close()">
+  <mat-sidenav
+    #sidenav
+    (keydown.escape)="sidenav.close()"
+    disableClose
+    position="end"
+    autoFocus="false"
+  >
+    <div class="sidenav-container">
+      <div class="sidenav-buttons">
+        <button
+          mat-button
+          routerLinkActive
+          routerLink="feed"
+          #postsRla="routerLinkActive"
+          [color]="postsRla.isActive ? 'primary' : null"
+        >
+          Articles
+        </button>
+        <button
+          mat-button
+          routerLinkActive
+          routerLink="topics"
+          #topicRla="routerLinkActive"
+          [color]="topicRla.isActive ? 'primary' : null"
+        >
+          Thèmes
+        </button>
+      </div>
+      <img
+        routerLinkActive
+        #profileRla="routerLinkActive"
+        [src]="
+          profileRla.isActive
+            ? 'images/profile-selected.svg'
+            : 'images/profile.svg'
+        "
+        alt="profile"
+        routerLink="profile"
+        class="profile"
+      />
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-header (openMenuAction)="sidenav.open()"></app-header>
+    <div class="router-outlet-container">
+        <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

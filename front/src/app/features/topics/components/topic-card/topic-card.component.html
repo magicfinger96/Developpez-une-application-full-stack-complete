@@ -1,0 +1,13 @@
+<div class="card">
+  <span class="title">{{ topic.title }}</span>
+  <span class="text description">{{ topic.description }}</span>
+  <div class="subscription-button">
+    @if (topic.subscribed && canSubscribe) {
+    <button mat-button disabled>Abonné(e)</button>
+    } @else {
+    <button mat-flat-button color="primary" (click)="onButtonClicked()">
+      {{ buttonText }}
+    </button>
+    }
+  </div>
+</div>

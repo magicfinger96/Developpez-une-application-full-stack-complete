@@ -1,0 +1,4 @@
+<div class="list">
+  <app-topic-card *ngFor="let topic of list$ | async" [topic]="topic" [canSubscribe]="true">
+  </app-topic-card>
+</div>

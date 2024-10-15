@@ -1,7 +1,48 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+}
+
 .center {
-  height: 100vh;
+  margin-top: -300px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+img {
+  flex: 1;
+  max-width: 100%;
+}
+
+.buttons {
+  display: flex;
+
+  button {
+    width: 156px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .buttons {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .center {
+    gap: 50px;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .buttons {
+    gap: 80px;
+  }
 }

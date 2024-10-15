@@ -1,0 +1,105 @@
+.text {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.comments {
+  margin-top: 30px;
+}
+
+.list {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
+.comment {
+  display: flex;
+
+  span {
+    text-align: right;
+    min-width: 140px;
+  }
+}
+
+.content {
+  background-color: #eeeeee;
+  border-radius: 16px;
+  padding: 10px;
+}
+
+form {
+  margin-top: 43px;
+
+  .textarea-container {
+    width: 100%;
+    height: 120px;
+    position: relative;
+  }
+
+  textarea {
+    resize: none;
+    border-radius: 16px;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+  }
+
+  button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-top: 5px;
+    height: fit-content;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .comment {
+    flex-direction: column-reverse;
+    order: reverse;
+    gap: 5px;
+  }
+
+  form {
+    button {
+      right: 5px;
+    }
+  }
+
+  textarea {
+    margin-right: 50px;
+    padding: 15px 75px 15px 15px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  textarea::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .comment {
+    gap: 20px;
+  }
+
+  .comments {
+    margin-left: 70px;
+    margin-right: 127px;
+  }
+
+  form {
+    margin-left: 57px;
+
+    button {
+      right: -95px;
+    }
+
+    textarea {
+      padding: 15px 15px 15px 15px;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+.details {
+  display: flex;
+  flex-direction: column;
+  padding: 23px 15px;
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-family: "Inter";
+    font-weight: 600;
+    font-size: 24px;
+    vertical-align: middle;
+    margin-left: 5px;
+  }
+
+  .text {
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 20px;
+  }
+
+  .post-infos {
+    text-align: left;
+
+    span {
+      width: auto;
+      display: inline-block;
+      margin-right: 60px;
+      margin-bottom: 30px;
+    }
+  }
+
+  .description {
+    margin-bottom: 30px;
+  }
+
+  mat-icon {
+    transform: scale(2);
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .post-infos {
+    margin-left: 70px;
+  }
+
+  .description {
+    margin-left: 70px;
+  }
+}

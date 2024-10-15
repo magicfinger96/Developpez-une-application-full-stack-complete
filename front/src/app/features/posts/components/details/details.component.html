@@ -1,0 +1,16 @@
+<div class="details" *ngIf="post">
+  <div class="header">
+    <button mat-button routerLink="/feed">
+      <mat-icon>keyboard_backspace</mat-icon>
+    </button>
+    <span class="title">{{ post.title }}</span>
+  </div>
+  <span class="post-infos">
+    <span class="text">{{ post.creationDate | date : "longDate" }}</span>
+    <span class="text">{{ post.author.username }}</span>
+    <span class="text">{{ post.topic.title }}</span>
+  </span>
+  <span class="text description">{{ post.content }}</span>
+  <mat-divider></mat-divider>
+  <app-comments [postId]="post.id"></app-comments>
+</div>
